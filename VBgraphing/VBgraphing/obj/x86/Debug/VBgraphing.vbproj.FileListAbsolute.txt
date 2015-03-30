@@ -1,0 +1,42 @@
+C:\Users\Admin\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\bin\Debug\VBgraphing.exe
+C:\Users\Admin\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\bin\Debug\VBgraphing.pdb
+C:\Users\Admin\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\bin\Debug\VBgraphing.xml
+C:\Users\Admin\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Admin\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.Form1.resources
+C:\Users\Admin\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.Resources.resources
+C:\Users\Admin\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Admin\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Admin\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.exe
+C:\Users\Admin\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.xml
+C:\Users\Admin\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.pdb
+\\khensu\Home05\gshawn\My Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.exe
+\\khensu\Home05\gshawn\My Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.xml
+\\khensu\Home05\gshawn\My Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.pdb
+\\khensu\Home05\gshawn\My Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\bin\Debug\VBgraphing.exe
+\\khensu\Home05\gshawn\My Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\bin\Debug\VBgraphing.pdb
+\\khensu\Home05\gshawn\My Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\bin\Debug\VBgraphing.xml
+\\khensu\Home05\gshawn\My Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\ResolveAssemblyReference.cache
+\\khensu\Home05\gshawn\My Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.Form1.resources
+\\khensu\Home05\gshawn\My Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.Resources.resources
+\\khensu\Home05\gshawn\My Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\GenerateResource.read.1.tlog
+\\khensu\Home05\gshawn\My Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Afroman808\Desktop\VBgraphing\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.exe
+C:\Users\Afroman808\Desktop\VBgraphing\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.xml
+C:\Users\Afroman808\Desktop\VBgraphing\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.pdb
+C:\Users\Afroman808\Desktop\VBgraphing\VBgraphing\VBgraphing\bin\Debug\VBgraphing.exe
+C:\Users\Afroman808\Desktop\VBgraphing\VBgraphing\VBgraphing\bin\Debug\VBgraphing.pdb
+C:\Users\Afroman808\Desktop\VBgraphing\VBgraphing\VBgraphing\bin\Debug\VBgraphing.xml
+C:\Users\Afroman808\Desktop\VBgraphing\VBgraphing\VBgraphing\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Afroman808\Desktop\VBgraphing\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.Form1.resources
+C:\Users\Afroman808\Desktop\VBgraphing\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.Resources.resources
+C:\Users\Afroman808\Desktop\VBgraphing\VBgraphing\VBgraphing\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Afroman808\Desktop\VBgraphing\VBgraphing\VBgraphing\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Afroman808\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.exe
+C:\Users\Afroman808\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.xml
+C:\Users\Afroman808\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.pdb
+C:\Users\Afroman808\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\bin\Debug\VBgraphing.exe
+C:\Users\Afroman808\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\bin\Debug\VBgraphing.pdb
+C:\Users\Afroman808\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\bin\Debug\VBgraphing.xml
+C:\Users\Afroman808\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.Form1.resources
+C:\Users\Afroman808\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.Resources.resources
+C:\Users\Afroman808\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.vbproj.GenerateResource.Cache
