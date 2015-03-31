@@ -40,3 +40,12 @@ C:\Users\Afroman808\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\
 C:\Users\Afroman808\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.Form1.resources
 C:\Users\Afroman808\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.Resources.resources
 C:\Users\Afroman808\Documents\Visual Studio 2010\Projects\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.vbproj.GenerateResource.Cache
+C:\Users\Afroman808\Git_Repos\Graph_Alg_Complexities\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.exe
+C:\Users\Afroman808\Git_Repos\Graph_Alg_Complexities\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.xml
+C:\Users\Afroman808\Git_Repos\Graph_Alg_Complexities\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.pdb
+C:\Users\Afroman808\Git_Repos\Graph_Alg_Complexities\VBgraphing\VBgraphing\bin\Debug\VBgraphing.exe
+C:\Users\Afroman808\Git_Repos\Graph_Alg_Complexities\VBgraphing\VBgraphing\bin\Debug\VBgraphing.pdb
+C:\Users\Afroman808\Git_Repos\Graph_Alg_Complexities\VBgraphing\VBgraphing\bin\Debug\VBgraphing.xml
+C:\Users\Afroman808\Git_Repos\Graph_Alg_Complexities\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.Form1.resources
+C:\Users\Afroman808\Git_Repos\Graph_Alg_Complexities\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.Resources.resources
+C:\Users\Afroman808\Git_Repos\Graph_Alg_Complexities\VBgraphing\VBgraphing\obj\x86\Debug\VBgraphing.vbproj.GenerateResource.Cache

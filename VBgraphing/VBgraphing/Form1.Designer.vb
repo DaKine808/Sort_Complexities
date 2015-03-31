@@ -22,14 +22,13 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend4 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series13 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series14 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series15 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series16 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.Chart1 = New System.Windows.Forms.DataVisualization.Charting.Chart()
-        Me.RandSerBtn = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.NumOfRuns = New System.Windows.Forms.NumericUpDown()
         Me.Panel1 = New System.Windows.Forms.Panel()
@@ -56,7 +55,6 @@ Partial Class Form1
         Me.NlogNVisBtn = New System.Windows.Forms.CheckBox()
         Me.DisplayBox = New System.Windows.Forms.CheckBox()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
         Me.Clear_Btn = New System.Windows.Forms.Button()
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumOfRuns, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -68,64 +66,55 @@ Partial Class Form1
         '
         'Chart1
         '
-        ChartArea1.AxisX.MajorGrid.IntervalOffset = 0.0R
-        ChartArea1.AxisX.Minimum = 0.0R
-        ChartArea1.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea1)
-        Legend1.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend1)
+        ChartArea4.AxisX.MajorGrid.IntervalOffset = 0.0R
+        ChartArea4.AxisX.Minimum = 0.0R
+        ChartArea4.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea4)
+        Legend4.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend4)
         Me.Chart1.Location = New System.Drawing.Point(12, 12)
         Me.Chart1.Name = "Chart1"
-        Series1.ChartArea = "ChartArea1"
-        Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Series2.ChartArea = "ChartArea1"
-        Series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series2"
-        Series3.ChartArea = "ChartArea1"
-        Series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series3.Legend = "Legend1"
-        Series3.Name = "Series3"
-        Series4.ChartArea = "ChartArea1"
-        Series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series4.Legend = "Legend1"
-        Series4.Name = "Series4"
-        Me.Chart1.Series.Add(Series1)
-        Me.Chart1.Series.Add(Series2)
-        Me.Chart1.Series.Add(Series3)
-        Me.Chart1.Series.Add(Series4)
+        Series13.ChartArea = "ChartArea1"
+        Series13.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series13.Legend = "Legend1"
+        Series13.Name = "Series1"
+        Series14.ChartArea = "ChartArea1"
+        Series14.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series14.Legend = "Legend1"
+        Series14.Name = "Series2"
+        Series15.ChartArea = "ChartArea1"
+        Series15.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series15.Legend = "Legend1"
+        Series15.Name = "Series3"
+        Series16.ChartArea = "ChartArea1"
+        Series16.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series16.Legend = "Legend1"
+        Series16.Name = "Series4"
+        Me.Chart1.Series.Add(Series13)
+        Me.Chart1.Series.Add(Series14)
+        Me.Chart1.Series.Add(Series15)
+        Me.Chart1.Series.Add(Series16)
         Me.Chart1.Size = New System.Drawing.Size(783, 520)
         Me.Chart1.TabIndex = 0
         Me.Chart1.Text = "Chart1"
         '
-        'RandSerBtn
-        '
-        Me.RandSerBtn.Location = New System.Drawing.Point(825, 508)
-        Me.RandSerBtn.Name = "RandSerBtn"
-        Me.RandSerBtn.Size = New System.Drawing.Size(95, 23)
-        Me.RandSerBtn.TabIndex = 5
-        Me.RandSerBtn.Text = "Add Rand Series"
-        Me.RandSerBtn.UseVisualStyleBackColor = True
-        '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(983, 43)
+        Me.Label1.Location = New System.Drawing.Point(806, 453)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(87, 13)
+        Me.Label1.Size = New System.Drawing.Size(84, 26)
         Me.Label1.TabIndex = 8
-        Me.Label1.Text = "Number of Runs:"
+        Me.Label1.Text = "Number of Runs" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " per Array Size:"
         '
         'NumOfRuns
         '
         Me.NumOfRuns.Increment = New Decimal(New Integer() {100, 0, 0, 0})
-        Me.NumOfRuns.Location = New System.Drawing.Point(1073, 40)
+        Me.NumOfRuns.Location = New System.Drawing.Point(896, 459)
         Me.NumOfRuns.Maximum = New Decimal(New Integer() {99999999, 0, 0, 0})
-        Me.NumOfRuns.Minimum = New Decimal(New Integer() {2, 0, 0, 0})
+        Me.NumOfRuns.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.NumOfRuns.Name = "NumOfRuns"
-        Me.NumOfRuns.Size = New System.Drawing.Size(120, 20)
+        Me.NumOfRuns.Size = New System.Drawing.Size(70, 20)
         Me.NumOfRuns.TabIndex = 9
         Me.NumOfRuns.Value = New Decimal(New Integer() {300, 0, 0, 0})
         '
@@ -137,7 +126,7 @@ Partial Class Form1
         Me.Panel1.Controls.Add(Me.MedianQuickRadio)
         Me.Panel1.Controls.Add(Me.QuickSortRadio)
         Me.Panel1.Controls.Add(Me.SelectionSortRadio)
-        Me.Panel1.Location = New System.Drawing.Point(825, 284)
+        Me.Panel1.Location = New System.Drawing.Point(826, 279)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(124, 124)
         Me.Panel1.TabIndex = 12
@@ -202,7 +191,7 @@ Partial Class Form1
         Me.Panel2.Controls.Add(Me.NearlySortedRadio)
         Me.Panel2.Controls.Add(Me.DecArrayRadio)
         Me.Panel2.Controls.Add(Me.IncArrayRadio)
-        Me.Panel2.Location = New System.Drawing.Point(825, 126)
+        Me.Panel2.Location = New System.Drawing.Point(826, 121)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(125, 93)
         Me.Panel2.TabIndex = 14
@@ -252,7 +241,7 @@ Partial Class Form1
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(983, 14)
+        Me.Label2.Location = New System.Drawing.Point(806, 427)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(80, 13)
         Me.Label2.TabIndex = 15
@@ -261,10 +250,10 @@ Partial Class Form1
         'InputSize
         '
         Me.InputSize.Increment = New Decimal(New Integer() {2, 0, 0, 0})
-        Me.InputSize.Location = New System.Drawing.Point(1073, 12)
-        Me.InputSize.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.InputSize.Location = New System.Drawing.Point(896, 425)
+        Me.InputSize.Minimum = New Decimal(New Integer() {2, 0, 0, 0})
         Me.InputSize.Name = "InputSize"
-        Me.InputSize.Size = New System.Drawing.Size(120, 20)
+        Me.InputSize.Size = New System.Drawing.Size(70, 20)
         Me.InputSize.TabIndex = 16
         Me.InputSize.Value = New Decimal(New Integer() {20, 0, 0, 0})
         '
@@ -273,7 +262,7 @@ Partial Class Form1
         Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel3.Controls.Add(Me.ComparisonsRadio)
         Me.Panel3.Controls.Add(Me.ClockCyclesRadio)
-        Me.Panel3.Location = New System.Drawing.Point(825, 225)
+        Me.Panel3.Location = New System.Drawing.Point(826, 220)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(125, 53)
         Me.Panel3.TabIndex = 17
@@ -302,7 +291,7 @@ Partial Class Form1
         '
         'AutomatedButton
         '
-        Me.AutomatedButton.Location = New System.Drawing.Point(825, 414)
+        Me.AutomatedButton.Location = New System.Drawing.Point(810, 497)
         Me.AutomatedButton.Name = "AutomatedButton"
         Me.AutomatedButton.Size = New System.Drawing.Size(75, 23)
         Me.AutomatedButton.TabIndex = 19
@@ -311,18 +300,18 @@ Partial Class Form1
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(983, 87)
+        Me.TextBox1.Location = New System.Drawing.Point(983, 71)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox1.Size = New System.Drawing.Size(298, 444)
+        Me.TextBox1.Size = New System.Drawing.Size(298, 457)
         Me.TextBox1.TabIndex = 20
         Me.TextBox1.WordWrap = False
         '
         'NsqrVisBtn
         '
         Me.NsqrVisBtn.AutoSize = True
-        Me.NsqrVisBtn.Location = New System.Drawing.Point(825, 35)
+        Me.NsqrVisBtn.Location = New System.Drawing.Point(826, 47)
         Me.NsqrVisBtn.Name = "NsqrVisBtn"
         Me.NsqrVisBtn.Size = New System.Drawing.Size(77, 17)
         Me.NsqrVisBtn.TabIndex = 21
@@ -332,7 +321,7 @@ Partial Class Form1
         'nVisBtn
         '
         Me.nVisBtn.AutoSize = True
-        Me.nVisBtn.Location = New System.Drawing.Point(825, 12)
+        Me.nVisBtn.Location = New System.Drawing.Point(826, 24)
         Me.nVisBtn.Name = "nVisBtn"
         Me.nVisBtn.Size = New System.Drawing.Size(65, 17)
         Me.nVisBtn.TabIndex = 25
@@ -342,7 +331,7 @@ Partial Class Form1
         'logNVisBtn
         '
         Me.logNVisBtn.AutoSize = True
-        Me.logNVisBtn.Location = New System.Drawing.Point(825, 59)
+        Me.logNVisBtn.Location = New System.Drawing.Point(826, 71)
         Me.logNVisBtn.Name = "logNVisBtn"
         Me.logNVisBtn.Size = New System.Drawing.Size(86, 17)
         Me.logNVisBtn.TabIndex = 26
@@ -352,7 +341,7 @@ Partial Class Form1
         'NlogNVisBtn
         '
         Me.NlogNVisBtn.AutoSize = True
-        Me.NlogNVisBtn.Location = New System.Drawing.Point(825, 83)
+        Me.NlogNVisBtn.Location = New System.Drawing.Point(826, 95)
         Me.NlogNVisBtn.Name = "NlogNVisBtn"
         Me.NlogNVisBtn.Size = New System.Drawing.Size(91, 17)
         Me.NlogNVisBtn.TabIndex = 28
@@ -362,7 +351,7 @@ Partial Class Form1
         'DisplayBox
         '
         Me.DisplayBox.AutoSize = True
-        Me.DisplayBox.Location = New System.Drawing.Point(825, 475)
+        Me.DisplayBox.Location = New System.Drawing.Point(983, 24)
         Me.DisplayBox.Name = "DisplayBox"
         Me.DisplayBox.Size = New System.Drawing.Size(145, 17)
         Me.DisplayBox.TabIndex = 29
@@ -372,24 +361,15 @@ Partial Class Form1
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(986, 68)
+        Me.Label4.Location = New System.Drawing.Point(980, 51)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(71, 13)
         Me.Label4.TabIndex = 31
         Me.Label4.Text = "Array Display:"
         '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(1199, 43)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(73, 13)
-        Me.Label5.TabIndex = 32
-        Me.Label5.Text = "Per Array Size"
-        '
         'Clear_Btn
         '
-        Me.Clear_Btn.Location = New System.Drawing.Point(825, 446)
+        Me.Clear_Btn.Location = New System.Drawing.Point(891, 497)
         Me.Clear_Btn.Name = "Clear_Btn"
         Me.Clear_Btn.Size = New System.Drawing.Size(75, 23)
         Me.Clear_Btn.TabIndex = 33
@@ -402,7 +382,6 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1293, 543)
         Me.Controls.Add(Me.Clear_Btn)
-        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.DisplayBox)
         Me.Controls.Add(Me.NlogNVisBtn)
@@ -418,7 +397,6 @@ Partial Class Form1
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.NumOfRuns)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.RandSerBtn)
         Me.Controls.Add(Me.Chart1)
         Me.Name = "Form1"
         Me.Text = "VBgraphing"
@@ -436,7 +414,6 @@ Partial Class Form1
 
     End Sub
     Friend WithEvents Chart1 As System.Windows.Forms.DataVisualization.Charting.Chart
-    Friend WithEvents RandSerBtn As System.Windows.Forms.Button
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents NumOfRuns As System.Windows.Forms.NumericUpDown
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
@@ -462,7 +439,6 @@ Partial Class Form1
     Friend WithEvents NlogNVisBtn As System.Windows.Forms.CheckBox
     Friend WithEvents DisplayBox As System.Windows.Forms.CheckBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents Clear_Btn As System.Windows.Forms.Button
     Friend WithEvents BubbleSortRadio As System.Windows.Forms.RadioButton
 

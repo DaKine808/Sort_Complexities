@@ -32,19 +32,6 @@ Public Class Form1
         Chart1.Series(3).Enabled = False
     End Sub
 
-    Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RandSerBtn.Click
-        Dim newSeries As New Series
-        Dim rand As New Random
-
-        Chart1.Series.Add(newSeries)
-        newSeries.Name = "NewSeries" & numberOfSeries
-        For i = 0 To 11
-            newSeries.Points.AddXY(i * 10, rand.Next(100) * 1.375234)
-        Next
-        newSeries.ChartType = SeriesChartType.Spline
-        numberOfSeries = numberOfSeries + 1
-    End Sub
-
     'CHANGE IF A SERIES IS ENABLED OR NOT
     Private Sub nVisBtn_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nVisBtn.CheckedChanged
         If nVisBtn.Checked = True Then
