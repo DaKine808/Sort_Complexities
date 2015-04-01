@@ -156,11 +156,12 @@ Public Class Form1
             End If
         Next
 
-        'PrintSortedArray(ArrayToSort)
-        'TextBox1.AppendText("Comparisons " & comparisons & vbNewLine)
-        'TextBox1.AppendText("Swaps " & swaps & vbNewLine)
         'Check that ArrayToSort() is sorted properly
         If CheckSort(ArrayToSort) = True Then
+            'Print the sorted array
+            If DisplayBox.Checked Then
+                PrintSortedArray(ArrayToSort)
+            End If
             Return comparisons
         Else
             MsgBox("ERROR: Array was NOT sorted properly")
@@ -212,6 +213,10 @@ Public Class Form1
 
         'Check that newArray is sorted correctly
         If CheckSort(tempArray) = True Then
+            'Print the sorted array
+            If DisplayBox.Checked Then
+                PrintSortedArray(tempArray)
+            End If
             Return comparisons
         Else
             MsgBox("ERROR: Array was NOT sorted properly")
@@ -326,6 +331,10 @@ Public Class Form1
             Next
         End While
         If CheckSort(ArrayToSort) = True Then
+            'Print the sorted array
+            If DisplayBox.Checked Then
+                PrintSortedArray(ArrayToSort)
+            End If
             Return comparisons
         Else
             MsgBox("ERROR: Array was NOT sorted properly")
@@ -362,6 +371,9 @@ Public Class Form1
 
         'Check that ArrayToSort() is sorted properly
         If CheckSort(ArrayToSort) = True Then
+            If DisplayBox.Checked Then
+                PrintSortedArray(ArrayToSort)
+            End If
             Return (EndTicks - StartTicks)
         Else
             MsgBox("ERROR: Array was NOT sorted properly")
@@ -402,6 +414,9 @@ Public Class Form1
 
         'Check that newArray is sorted correctly
         If CheckSort(tempArray) = True Then
+            If DisplayBox.Checked Then
+                PrintSortedArray(tempArray)
+            End If
             Return (EndTicks - StartTicks)
         Else
             MsgBox("ERROR: Array was NOT sorted properly")
@@ -512,6 +527,9 @@ Public Class Form1
         EndTicks = Environment.TickCount
 
         If CheckSort(ArrayToSort) = True Then
+            If DisplayBox.Checked Then
+                PrintSortedArray(ArrayToSort)
+            End If
             Return (EndTicks - StartTicks)
         Else
             MsgBox("ERROR: Array was NOT sorted properly")
@@ -543,7 +561,7 @@ Public Class Form1
         Dim SortTrend(x) As Integer
         Dim ResultsArray(y) As Integer 'Will hold the results for multiple runs of a single array size
         Dim newSeries As New Series
-        Dim ClockArrayMult As Integer = 100
+        Dim ClockArrayMult As Integer = 10
         Dim temp As Integer
         Dim sTick As Long
         Dim eTick As Long
@@ -642,36 +660,36 @@ Public Class Form1
         Dim startTick As Long
         Dim endTick As Long
 
+        QuickComps = 0 'This is a global variable that is altered in sorting functions so it must be set here
+
+        If DisplayBox.Checked Then
+            PrintUnsortedArray(refArray)
+        End If
+
         If ComparisonsRadio.Checked Then
             If SelectionSortRadio.Checked Then
                 Return SSComparisons(refArray)
             ElseIf InsertionSortRadio.Checked = True Then
                 Return InsertionComparisons(refArray)
             ElseIf QuickSortRadio.Checked Then
-                If DisplayBox.Checked Then
-                    PrintUnsortedArray(refArray)
-                End If
-                QuickComps = 0
                 QuickComparisons(refArray, 0, UBound(refArray))
-                If DisplayBox.Checked Then
-                    PrintSortedArray(refArray)
-                End If
+                'Since quicksort is recursive, checking and displaying the array is done from here
                 If CheckSort(refArray) Then
+                    If DisplayBox.Checked Then
+                        PrintSortedArray(refArray)
+                    End If
                     Return QuickComps
                 Else
                     MsgBox("ERROR: Array was not sorted")
                     Return 0
                 End If
             ElseIf MedianQuickRadio.Checked Then
-                If DisplayBox.Checked Then
-                    PrintUnsortedArray(refArray)
-                End If
-                QuickComps = 0
                 MedianOfThreeComparisons(refArray, 0, UBound(refArray))
-                If DisplayBox.Checked Then
-                    PrintSortedArray(refArray)
-                End If
+                'Since quicksort is recursive, checking and displaying the array is done from here
                 If CheckSort(refArray) Then
+                    If DisplayBox.Checked Then
+                        PrintSortedArray(refArray)
+                    End If
                     Return QuickComps
                 Else
                     MsgBox("ERROR: Array was not sorted")
@@ -686,26 +704,26 @@ Public Class Form1
             ElseIf InsertionSortRadio.Checked Then
                 Return InsertionTicks(refArray)
             ElseIf QuickSortRadio.Checked Then
-                If DisplayBox.Checked Then
-                    PrintUnsortedArray(refArray)
-                End If
                 'startTick = Environment.TickCount
                 QuickTicks(refArray, 0, UBound(refArray))
                 'endTick = Environment.TickCount
                 If CheckSort(refArray) Then
+                    If DisplayBox.Checked Then
+                        PrintSortedArray(refArray)
+                    End If
                     Return (endTick - startTick)
                 Else
                     MsgBox("ERROR: Array was not sorted")
                     Return 0
                 End If
             ElseIf MedianQuickRadio.Checked Then
-                If DisplayBox.Checked Then
-                    PrintUnsortedArray(refArray)
-                End If
                 'startTick = Environment.TickCount
                 MedianQuickTicks(refArray, 0, UBound(refArray))
                 'endTick = Environment.TickCount
                 If CheckSort(refArray) Then
+                    If DisplayBox.Checked Then
+                        PrintSortedArray(refArray)
+                    End If
                     Return (endTick - startTick)
                 Else
                     MsgBox("ERROR: Array was not sorted")
