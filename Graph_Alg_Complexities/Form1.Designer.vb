@@ -22,16 +22,20 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series9 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series10 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series11 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series12 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.Chart1 = New System.Windows.Forms.DataVisualization.Charting.Chart()
+        Me.RandSerBtn = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.NumOfRuns = New System.Windows.Forms.NumericUpDown()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.BucketSortRadio = New System.Windows.Forms.RadioButton()
+        Me.VBRadio = New System.Windows.Forms.RadioButton()
+        Me.MergeSortRadio = New System.Windows.Forms.RadioButton()
         Me.BubbleSortRadio = New System.Windows.Forms.RadioButton()
         Me.InsertionSortRadio = New System.Windows.Forms.RadioButton()
         Me.MedianQuickRadio = New System.Windows.Forms.RadioButton()
@@ -55,81 +59,138 @@ Partial Class Form1
         Me.NlogNVisBtn = New System.Windows.Forms.CheckBox()
         Me.DisplayBox = New System.Windows.Forms.CheckBox()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.Clear_Btn = New System.Windows.Forms.Button()
+        Me.LineMultiplier = New System.Windows.Forms.NumericUpDown()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.SelectionSortCheckBox = New System.Windows.Forms.CheckBox()
+        Me.QuickSortCheckBox = New System.Windows.Forms.CheckBox()
+        Me.MedianOf3CheckBox = New System.Windows.Forms.CheckBox()
+        Me.InsertionSortCheckBox = New System.Windows.Forms.CheckBox()
+        Me.BubbleSortCheckBox = New System.Windows.Forms.CheckBox()
+        Me.MergeSortCheckBox = New System.Windows.Forms.CheckBox()
+        Me.BucketSortCheckBox = New System.Windows.Forms.CheckBox()
+        Me.VBSortCheckBox = New System.Windows.Forms.CheckBox()
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumOfRuns, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.InputSize, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel3.SuspendLayout()
+        CType(Me.LineMultiplier, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel4.SuspendLayout()
         Me.SuspendLayout()
         '
         'Chart1
         '
-        ChartArea1.AxisX.MajorGrid.IntervalOffset = 0.0R
-        ChartArea1.AxisX.Minimum = 0.0R
-        ChartArea1.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea1)
-        Legend1.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend1)
+        ChartArea3.AxisX.MajorGrid.IntervalOffset = 0.0R
+        ChartArea3.AxisX.Minimum = 0.0R
+        ChartArea3.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea3)
+        Legend3.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend3)
         Me.Chart1.Location = New System.Drawing.Point(12, 12)
         Me.Chart1.Name = "Chart1"
-        Series1.ChartArea = "ChartArea1"
-        Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Series2.ChartArea = "ChartArea1"
-        Series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series2"
-        Series3.ChartArea = "ChartArea1"
-        Series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series3.Legend = "Legend1"
-        Series3.Name = "Series3"
-        Series4.ChartArea = "ChartArea1"
-        Series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series4.Legend = "Legend1"
-        Series4.Name = "Series4"
-        Me.Chart1.Series.Add(Series1)
-        Me.Chart1.Series.Add(Series2)
-        Me.Chart1.Series.Add(Series3)
-        Me.Chart1.Series.Add(Series4)
-        Me.Chart1.Size = New System.Drawing.Size(783, 520)
+        Series9.ChartArea = "ChartArea1"
+        Series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series9.Legend = "Legend1"
+        Series9.Name = "Series1"
+        Series10.ChartArea = "ChartArea1"
+        Series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series10.Legend = "Legend1"
+        Series10.Name = "Series2"
+        Series11.ChartArea = "ChartArea1"
+        Series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series11.Legend = "Legend1"
+        Series11.Name = "Series3"
+        Series12.ChartArea = "ChartArea1"
+        Series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series12.Legend = "Legend1"
+        Series12.Name = "Series4"
+        Me.Chart1.Series.Add(Series9)
+        Me.Chart1.Series.Add(Series10)
+        Me.Chart1.Series.Add(Series11)
+        Me.Chart1.Series.Add(Series12)
+        Me.Chart1.Size = New System.Drawing.Size(783, 557)
         Me.Chart1.TabIndex = 0
         Me.Chart1.Text = "Chart1"
+        '
+        'RandSerBtn
+        '
+        Me.RandSerBtn.Location = New System.Drawing.Point(975, 497)
+        Me.RandSerBtn.Name = "RandSerBtn"
+        Me.RandSerBtn.Size = New System.Drawing.Size(95, 23)
+        Me.RandSerBtn.TabIndex = 5
+        Me.RandSerBtn.Text = "Add Rand Series"
+        Me.RandSerBtn.UseVisualStyleBackColor = True
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(806, 453)
+        Me.Label1.Location = New System.Drawing.Point(983, 43)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(84, 26)
+        Me.Label1.Size = New System.Drawing.Size(87, 13)
         Me.Label1.TabIndex = 8
-        Me.Label1.Text = "Number of Runs" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " per Array Size:"
+        Me.Label1.Text = "Number of Runs:"
         '
         'NumOfRuns
         '
         Me.NumOfRuns.Increment = New Decimal(New Integer() {100, 0, 0, 0})
-        Me.NumOfRuns.Location = New System.Drawing.Point(896, 459)
+        Me.NumOfRuns.Location = New System.Drawing.Point(1073, 40)
         Me.NumOfRuns.Maximum = New Decimal(New Integer() {99999999, 0, 0, 0})
-        Me.NumOfRuns.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NumOfRuns.Minimum = New Decimal(New Integer() {2, 0, 0, 0})
         Me.NumOfRuns.Name = "NumOfRuns"
-        Me.NumOfRuns.Size = New System.Drawing.Size(70, 20)
+        Me.NumOfRuns.Size = New System.Drawing.Size(120, 20)
         Me.NumOfRuns.TabIndex = 9
         Me.NumOfRuns.Value = New Decimal(New Integer() {300, 0, 0, 0})
         '
         'Panel1
         '
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel1.Controls.Add(Me.BucketSortRadio)
+        Me.Panel1.Controls.Add(Me.VBRadio)
+        Me.Panel1.Controls.Add(Me.MergeSortRadio)
         Me.Panel1.Controls.Add(Me.BubbleSortRadio)
         Me.Panel1.Controls.Add(Me.InsertionSortRadio)
         Me.Panel1.Controls.Add(Me.MedianQuickRadio)
         Me.Panel1.Controls.Add(Me.QuickSortRadio)
         Me.Panel1.Controls.Add(Me.SelectionSortRadio)
-        Me.Panel1.Location = New System.Drawing.Point(826, 279)
+        Me.Panel1.Location = New System.Drawing.Point(1127, 353)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(124, 124)
+        Me.Panel1.Size = New System.Drawing.Size(124, 192)
         Me.Panel1.TabIndex = 12
+        '
+        'BucketSortRadio
+        '
+        Me.BucketSortRadio.AutoSize = True
+        Me.BucketSortRadio.Location = New System.Drawing.Point(14, 147)
+        Me.BucketSortRadio.Name = "BucketSortRadio"
+        Me.BucketSortRadio.Size = New System.Drawing.Size(81, 17)
+        Me.BucketSortRadio.TabIndex = 7
+        Me.BucketSortRadio.Text = "Bucket Sort"
+        Me.BucketSortRadio.UseVisualStyleBackColor = True
+        '
+        'VBRadio
+        '
+        Me.VBRadio.AutoSize = True
+        Me.VBRadio.Location = New System.Drawing.Point(14, 170)
+        Me.VBRadio.Name = "VBRadio"
+        Me.VBRadio.Size = New System.Drawing.Size(61, 17)
+        Me.VBRadio.TabIndex = 6
+        Me.VBRadio.Text = "VB Sort"
+        Me.VBRadio.UseVisualStyleBackColor = True
+        '
+        'MergeSortRadio
+        '
+        Me.MergeSortRadio.AutoSize = True
+        Me.MergeSortRadio.Location = New System.Drawing.Point(14, 124)
+        Me.MergeSortRadio.Name = "MergeSortRadio"
+        Me.MergeSortRadio.Size = New System.Drawing.Size(77, 17)
+        Me.MergeSortRadio.TabIndex = 5
+        Me.MergeSortRadio.TabStop = True
+        Me.MergeSortRadio.Text = "Merge Sort"
+        Me.MergeSortRadio.UseVisualStyleBackColor = True
         '
         'BubbleSortRadio
         '
@@ -191,7 +252,7 @@ Partial Class Form1
         Me.Panel2.Controls.Add(Me.NearlySortedRadio)
         Me.Panel2.Controls.Add(Me.DecArrayRadio)
         Me.Panel2.Controls.Add(Me.IncArrayRadio)
-        Me.Panel2.Location = New System.Drawing.Point(826, 121)
+        Me.Panel2.Location = New System.Drawing.Point(825, 126)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(125, 93)
         Me.Panel2.TabIndex = 14
@@ -241,7 +302,7 @@ Partial Class Form1
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(806, 427)
+        Me.Label2.Location = New System.Drawing.Point(983, 14)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(80, 13)
         Me.Label2.TabIndex = 15
@@ -250,10 +311,11 @@ Partial Class Form1
         'InputSize
         '
         Me.InputSize.Increment = New Decimal(New Integer() {2, 0, 0, 0})
-        Me.InputSize.Location = New System.Drawing.Point(896, 425)
-        Me.InputSize.Minimum = New Decimal(New Integer() {2, 0, 0, 0})
+        Me.InputSize.Location = New System.Drawing.Point(1073, 12)
+        Me.InputSize.Maximum = New Decimal(New Integer() {9999999, 0, 0, 0})
+        Me.InputSize.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.InputSize.Name = "InputSize"
-        Me.InputSize.Size = New System.Drawing.Size(70, 20)
+        Me.InputSize.Size = New System.Drawing.Size(120, 20)
         Me.InputSize.TabIndex = 16
         Me.InputSize.Value = New Decimal(New Integer() {20, 0, 0, 0})
         '
@@ -262,7 +324,7 @@ Partial Class Form1
         Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel3.Controls.Add(Me.ComparisonsRadio)
         Me.Panel3.Controls.Add(Me.ClockCyclesRadio)
-        Me.Panel3.Location = New System.Drawing.Point(826, 220)
+        Me.Panel3.Location = New System.Drawing.Point(825, 225)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(125, 53)
         Me.Panel3.TabIndex = 17
@@ -291,7 +353,7 @@ Partial Class Form1
         '
         'AutomatedButton
         '
-        Me.AutomatedButton.Location = New System.Drawing.Point(810, 497)
+        Me.AutomatedButton.Location = New System.Drawing.Point(804, 497)
         Me.AutomatedButton.Name = "AutomatedButton"
         Me.AutomatedButton.Size = New System.Drawing.Size(75, 23)
         Me.AutomatedButton.TabIndex = 19
@@ -300,19 +362,18 @@ Partial Class Form1
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(983, 71)
+        Me.TextBox1.Location = New System.Drawing.Point(983, 87)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.ReadOnly = True
         Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox1.Size = New System.Drawing.Size(298, 457)
+        Me.TextBox1.Size = New System.Drawing.Size(298, 182)
         Me.TextBox1.TabIndex = 20
         Me.TextBox1.WordWrap = False
         '
         'NsqrVisBtn
         '
         Me.NsqrVisBtn.AutoSize = True
-        Me.NsqrVisBtn.Location = New System.Drawing.Point(826, 47)
+        Me.NsqrVisBtn.Location = New System.Drawing.Point(825, 35)
         Me.NsqrVisBtn.Name = "NsqrVisBtn"
         Me.NsqrVisBtn.Size = New System.Drawing.Size(77, 17)
         Me.NsqrVisBtn.TabIndex = 21
@@ -322,7 +383,7 @@ Partial Class Form1
         'nVisBtn
         '
         Me.nVisBtn.AutoSize = True
-        Me.nVisBtn.Location = New System.Drawing.Point(826, 24)
+        Me.nVisBtn.Location = New System.Drawing.Point(825, 12)
         Me.nVisBtn.Name = "nVisBtn"
         Me.nVisBtn.Size = New System.Drawing.Size(65, 17)
         Me.nVisBtn.TabIndex = 25
@@ -332,7 +393,7 @@ Partial Class Form1
         'logNVisBtn
         '
         Me.logNVisBtn.AutoSize = True
-        Me.logNVisBtn.Location = New System.Drawing.Point(826, 71)
+        Me.logNVisBtn.Location = New System.Drawing.Point(825, 59)
         Me.logNVisBtn.Name = "logNVisBtn"
         Me.logNVisBtn.Size = New System.Drawing.Size(86, 17)
         Me.logNVisBtn.TabIndex = 26
@@ -342,7 +403,7 @@ Partial Class Form1
         'NlogNVisBtn
         '
         Me.NlogNVisBtn.AutoSize = True
-        Me.NlogNVisBtn.Location = New System.Drawing.Point(826, 95)
+        Me.NlogNVisBtn.Location = New System.Drawing.Point(825, 83)
         Me.NlogNVisBtn.Name = "NlogNVisBtn"
         Me.NlogNVisBtn.Size = New System.Drawing.Size(91, 17)
         Me.NlogNVisBtn.TabIndex = 28
@@ -352,7 +413,7 @@ Partial Class Form1
         'DisplayBox
         '
         Me.DisplayBox.AutoSize = True
-        Me.DisplayBox.Location = New System.Drawing.Point(983, 24)
+        Me.DisplayBox.Location = New System.Drawing.Point(1106, 291)
         Me.DisplayBox.Name = "DisplayBox"
         Me.DisplayBox.Size = New System.Drawing.Size(145, 17)
         Me.DisplayBox.TabIndex = 29
@@ -362,27 +423,157 @@ Partial Class Form1
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(980, 51)
+        Me.Label4.Location = New System.Drawing.Point(986, 68)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(71, 13)
         Me.Label4.TabIndex = 31
         Me.Label4.Text = "Array Display:"
         '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(1199, 43)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(73, 13)
+        Me.Label5.TabIndex = 32
+        Me.Label5.Text = "Per Array Size"
+        '
         'Clear_Btn
         '
-        Me.Clear_Btn.Location = New System.Drawing.Point(891, 497)
+        Me.Clear_Btn.Location = New System.Drawing.Point(890, 497)
         Me.Clear_Btn.Name = "Clear_Btn"
         Me.Clear_Btn.Size = New System.Drawing.Size(75, 23)
         Me.Clear_Btn.TabIndex = 33
         Me.Clear_Btn.Text = "Clear Chart"
         Me.Clear_Btn.UseVisualStyleBackColor = True
         '
+        'LineMultiplier
+        '
+        Me.LineMultiplier.DecimalPlaces = 4
+        Me.LineMultiplier.Increment = New Decimal(New Integer() {25, 0, 0, 262144})
+        Me.LineMultiplier.Location = New System.Drawing.Point(825, 103)
+        Me.LineMultiplier.Maximum = New Decimal(New Integer() {200, 0, 0, 0})
+        Me.LineMultiplier.Minimum = New Decimal(New Integer() {25, 0, 0, 262144})
+        Me.LineMultiplier.Name = "LineMultiplier"
+        Me.LineMultiplier.Size = New System.Drawing.Size(56, 20)
+        Me.LineMultiplier.TabIndex = 34
+        Me.LineMultiplier.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(887, 105)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(71, 13)
+        Me.Label3.TabIndex = 35
+        Me.Label3.Text = "Line Multiplier"
+        '
+        'Panel4
+        '
+        Me.Panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel4.Controls.Add(Me.VBSortCheckBox)
+        Me.Panel4.Controls.Add(Me.BucketSortCheckBox)
+        Me.Panel4.Controls.Add(Me.MergeSortCheckBox)
+        Me.Panel4.Controls.Add(Me.BubbleSortCheckBox)
+        Me.Panel4.Controls.Add(Me.InsertionSortCheckBox)
+        Me.Panel4.Controls.Add(Me.MedianOf3CheckBox)
+        Me.Panel4.Controls.Add(Me.QuickSortCheckBox)
+        Me.Panel4.Controls.Add(Me.SelectionSortCheckBox)
+        Me.Panel4.Location = New System.Drawing.Point(826, 284)
+        Me.Panel4.Name = "Panel4"
+        Me.Panel4.Size = New System.Drawing.Size(124, 192)
+        Me.Panel4.TabIndex = 36
+        '
+        'SelectionSortCheckBox
+        '
+        Me.SelectionSortCheckBox.AutoSize = True
+        Me.SelectionSortCheckBox.Location = New System.Drawing.Point(13, 6)
+        Me.SelectionSortCheckBox.Name = "SelectionSortCheckBox"
+        Me.SelectionSortCheckBox.Size = New System.Drawing.Size(92, 17)
+        Me.SelectionSortCheckBox.TabIndex = 0
+        Me.SelectionSortCheckBox.Text = "Selection Sort"
+        Me.SelectionSortCheckBox.UseVisualStyleBackColor = True
+        '
+        'QuickSortCheckBox
+        '
+        Me.QuickSortCheckBox.AutoSize = True
+        Me.QuickSortCheckBox.Location = New System.Drawing.Point(12, 29)
+        Me.QuickSortCheckBox.Name = "QuickSortCheckBox"
+        Me.QuickSortCheckBox.Size = New System.Drawing.Size(76, 17)
+        Me.QuickSortCheckBox.TabIndex = 1
+        Me.QuickSortCheckBox.Text = "Quick Sort"
+        Me.QuickSortCheckBox.UseVisualStyleBackColor = True
+        '
+        'MedianOf3CheckBox
+        '
+        Me.MedianOf3CheckBox.AutoSize = True
+        Me.MedianOf3CheckBox.Location = New System.Drawing.Point(12, 53)
+        Me.MedianOf3CheckBox.Name = "MedianOf3CheckBox"
+        Me.MedianOf3CheckBox.Size = New System.Drawing.Size(82, 17)
+        Me.MedianOf3CheckBox.TabIndex = 2
+        Me.MedianOf3CheckBox.Text = "Median-of-3"
+        Me.MedianOf3CheckBox.UseVisualStyleBackColor = True
+        '
+        'InsertionSortCheckBox
+        '
+        Me.InsertionSortCheckBox.AutoSize = True
+        Me.InsertionSortCheckBox.Location = New System.Drawing.Point(12, 77)
+        Me.InsertionSortCheckBox.Name = "InsertionSortCheckBox"
+        Me.InsertionSortCheckBox.Size = New System.Drawing.Size(88, 17)
+        Me.InsertionSortCheckBox.TabIndex = 3
+        Me.InsertionSortCheckBox.Text = "Insertion Sort"
+        Me.InsertionSortCheckBox.UseVisualStyleBackColor = True
+        '
+        'BubbleSortCheckBox
+        '
+        Me.BubbleSortCheckBox.AutoSize = True
+        Me.BubbleSortCheckBox.Location = New System.Drawing.Point(13, 101)
+        Me.BubbleSortCheckBox.Name = "BubbleSortCheckBox"
+        Me.BubbleSortCheckBox.Size = New System.Drawing.Size(81, 17)
+        Me.BubbleSortCheckBox.TabIndex = 4
+        Me.BubbleSortCheckBox.Text = "Bubble Sort"
+        Me.BubbleSortCheckBox.UseVisualStyleBackColor = True
+        '
+        'MergeSortCheckBox
+        '
+        Me.MergeSortCheckBox.AutoSize = True
+        Me.MergeSortCheckBox.Location = New System.Drawing.Point(13, 125)
+        Me.MergeSortCheckBox.Name = "MergeSortCheckBox"
+        Me.MergeSortCheckBox.Size = New System.Drawing.Size(78, 17)
+        Me.MergeSortCheckBox.TabIndex = 5
+        Me.MergeSortCheckBox.Text = "Merge Sort"
+        Me.MergeSortCheckBox.UseVisualStyleBackColor = True
+        '
+        'BucketSortCheckBox
+        '
+        Me.BucketSortCheckBox.AutoSize = True
+        Me.BucketSortCheckBox.Location = New System.Drawing.Point(13, 148)
+        Me.BucketSortCheckBox.Name = "BucketSortCheckBox"
+        Me.BucketSortCheckBox.Size = New System.Drawing.Size(82, 17)
+        Me.BucketSortCheckBox.TabIndex = 6
+        Me.BucketSortCheckBox.Text = "Bucket Sort"
+        Me.BucketSortCheckBox.UseVisualStyleBackColor = True
+        '
+        'VBSortCheckBox
+        '
+        Me.VBSortCheckBox.AutoSize = True
+        Me.VBSortCheckBox.Location = New System.Drawing.Point(13, 171)
+        Me.VBSortCheckBox.Name = "VBSortCheckBox"
+        Me.VBSortCheckBox.Size = New System.Drawing.Size(62, 17)
+        Me.VBSortCheckBox.TabIndex = 7
+        Me.VBSortCheckBox.Text = "VB Sort"
+        Me.VBSortCheckBox.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1293, 543)
+        Me.ClientSize = New System.Drawing.Size(1293, 581)
+        Me.Controls.Add(Me.Panel4)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.LineMultiplier)
         Me.Controls.Add(Me.Clear_Btn)
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.DisplayBox)
         Me.Controls.Add(Me.NlogNVisBtn)
@@ -398,6 +589,7 @@ Partial Class Form1
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.NumOfRuns)
         Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.RandSerBtn)
         Me.Controls.Add(Me.Chart1)
         Me.Name = "Form1"
         Me.Text = "VBgraphing"
@@ -410,11 +602,15 @@ Partial Class Form1
         CType(Me.InputSize, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel3.ResumeLayout(False)
         Me.Panel3.PerformLayout()
+        CType(Me.LineMultiplier, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel4.ResumeLayout(False)
+        Me.Panel4.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
     Friend WithEvents Chart1 As System.Windows.Forms.DataVisualization.Charting.Chart
+    Friend WithEvents RandSerBtn As System.Windows.Forms.Button
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents NumOfRuns As System.Windows.Forms.NumericUpDown
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
@@ -440,7 +636,22 @@ Partial Class Form1
     Friend WithEvents NlogNVisBtn As System.Windows.Forms.CheckBox
     Friend WithEvents DisplayBox As System.Windows.Forms.CheckBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents Clear_Btn As System.Windows.Forms.Button
     Friend WithEvents BubbleSortRadio As System.Windows.Forms.RadioButton
+    Friend WithEvents LineMultiplier As System.Windows.Forms.NumericUpDown
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents MergeSortRadio As System.Windows.Forms.RadioButton
+    Friend WithEvents VBRadio As System.Windows.Forms.RadioButton
+    Friend WithEvents BucketSortRadio As System.Windows.Forms.RadioButton
+    Friend WithEvents Panel4 As System.Windows.Forms.Panel
+    Friend WithEvents VBSortCheckBox As System.Windows.Forms.CheckBox
+    Friend WithEvents BucketSortCheckBox As System.Windows.Forms.CheckBox
+    Friend WithEvents MergeSortCheckBox As System.Windows.Forms.CheckBox
+    Friend WithEvents BubbleSortCheckBox As System.Windows.Forms.CheckBox
+    Friend WithEvents InsertionSortCheckBox As System.Windows.Forms.CheckBox
+    Friend WithEvents MedianOf3CheckBox As System.Windows.Forms.CheckBox
+    Friend WithEvents QuickSortCheckBox As System.Windows.Forms.CheckBox
+    Friend WithEvents SelectionSortCheckBox As System.Windows.Forms.CheckBox
 
 End Class
