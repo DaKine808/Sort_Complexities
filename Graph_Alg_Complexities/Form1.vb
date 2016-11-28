@@ -2,11 +2,6 @@
 
 Public Class Form1
 
-    'Dim series1Lines As Boolean = False
-    'Dim series2Lines As Boolean = False
-    'Dim series3Lines As Boolean = False
-    'Dim series4Lines As Boolean = False
-
     Dim numberOfSeries As Integer = 1
     Dim timeMultiplier As Integer = 1 'Because counting clock cycles causes weird results, when counting them you must
     'adjust how large each array size is. By trial and error, 100 seems to be a good modifier.
@@ -108,7 +103,7 @@ Public Class Form1
                 If DisplayBox.Checked Then
                     PrintSortedArray(refArray)
                 End If
-                If CheckSort.CheckSort(refArray) Then
+                If CheckSort(refArray) Then
                     Return tempResult
                 Else
                     Return 0
@@ -117,13 +112,12 @@ Public Class Form1
                 If DisplayBox.Checked Then
                     PrintUnsortedArray(refArray)
                 End If
-                QuickComps = 0
-                MedianOfThreeComparisons(refArray, 0, UBound(refArray))
+                tempResult = MedianOfThreeComparisons(refArray, 0, UBound(refArray))
                 If DisplayBox.Checked Then
                     PrintSortedArray(refArray)
                 End If
-                If CheckSort.CheckSort(refArray) Then
-                    Return QuickComps
+                If CheckSort(refArray) Then
+                    Return tempResult
                 Else
                     Return 0
                 End If
@@ -142,7 +136,7 @@ Public Class Form1
                 startTick = Environment.TickCount
                 QuickTicks(refArray, 0, UBound(refArray))
                 endTick = Environment.TickCount
-                If CheckSort.CheckSort(refArray) Then
+                If CheckSort(refArray) Then
                     Return (endTick - startTick)
                 Else
                     Return 0
@@ -154,7 +148,7 @@ Public Class Form1
                 startTick = Environment.TickCount
                 MedianQuickTicks(refArray, 0, UBound(refArray))
                 endTick = Environment.TickCount
-                If CheckSort.CheckSort(refArray) Then
+                If CheckSort(refArray) Then
                     Return (endTick - startTick)
                 Else
                     Return 0
@@ -166,12 +160,12 @@ Public Class Form1
                     PrintUnsortedArray(refArray)
                 End If
                 startTick = Environment.TickCount
-                MergeTicks(refArray)
+                MergesortTicks(refArray)
                 endTick = Environment.TickCount
                 If DisplayBox.Checked Then
                     PrintSortedArray(refArray)
                 End If
-                If CheckSort.CheckSort(refArray) Then
+                If CheckSort(refArray) Then
                     Return (endTick - startTick)
                 Else
                     Return 0
@@ -356,4 +350,6 @@ Public Class Form1
             ComparisonsRadio.Enabled = True
         End If
     End Sub
+
+
 End Class

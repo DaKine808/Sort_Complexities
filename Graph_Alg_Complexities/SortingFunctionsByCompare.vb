@@ -1,7 +1,6 @@
 ﻿Module SortingFunctionsByCompare
+
     'SORTING ALGORITHMS COUNTING COMPARES
-
-
     Function SSComparisons(ByRef PassedArray() As Integer)
         Dim ArrayToSort() As Integer = PassedArray
         Dim lastElement As Integer = UBound(ArrayToSort)
@@ -27,14 +26,10 @@
             End If
         Next
 
-        'PrintSortedArray(ArrayToSort)
-        'TextBox1.AppendText("Comparisons " & comparisons & vbNewLine)
-        'TextBox1.AppendText("Swaps " & swaps & vbNewLine)
-        'Check that ArrayToSort() is sorted properly
         If CheckSort(ArrayToSort) = True Then
             Return comparisons
         Else
-            MsgBox("ERROR: Array was NOT sorted properly")
+            MsgBox("SSComparisons ERROR: Array was NOT sorted properly")
             Return 0
         End If
     End Function
@@ -49,15 +44,7 @@
 
         'Create a newArray with sentinel
         ReDim Preserve newArray(0 To UBound(PassedArray) + 1)
-        For r = 0 To UBound(PassedArray)
-            newArray(r + 1) = PassedArray(r)
-        Next
-
-        'Used to check contents of newArray()
-        'For q = 0 To UBound(newArray)
-        '    TextBox1.AppendText(newArray(q) & ", ")
-        'Next
-        'TextBox1.AppendText(" -> ")
+        PassedArray.CopyTo(newArray, 1)
 
         'Sort newArray
         For i = 1 To UBound(newArray)
@@ -75,33 +62,16 @@
         'Copy all but the sentinel of newArray() to tempArray()
         Array.Copy(newArray, 1, tempArray, 0, UBound(newArray))
 
-        'Used to check contents of tempArray()
-        'For r = 0 To UBound(PassedArray)
-        '    TextBox1.AppendText(tempArray(r) & ", ")
-        'Next
-        'TextBox1.AppendText(vbNewLine)
-
         'Check that newArray is sorted correctly
         If CheckSort(tempArray) = True Then
             Return comparisons
         Else
-            MsgBox("ERROR: Array was NOT sorted properly")
+            MsgBox("InsertionComparisons ERROR: Array was NOT sorted properly")
             Return 0
         End If
     End Function
-
-    'QUICKSORT
-    Function QuickComparisons(ByVal PassedArray() As Integer, ByRef l As Integer, ByRef r As Integer) As Integer
-        Dim s As Integer
-        Dim counter As Integer = 0
-        If l < r Then
-            s = Partition1(PassedArray, l, r, counter)
-            counter = counter + QuickComparisons(PassedArray, l, s - 1)
-            counter = counter + QuickComparisons(PassedArray, s + 1, r)
-        End If
-        Return counter
-    End Function
-
+   
+    'Partition1 is used for both Quicksort and Median-of-3 sort
     Function Partition1(ByVal subArray() As Integer, ByRef l As Integer, ByRef r As Integer, ByRef counter As Integer)
         Dim p As Integer = subArray(l)
         Dim i As Integer = l
@@ -136,46 +106,58 @@
 
         Return j
     End Function
-    'END QUICKSORT
 
-    Sub MedianOfThreeComparisons(ByVal PassedArray() As Integer, ByRef l As Integer, ByRef r As Integer)
-        Dim a As Integer = l
-        Dim b As Integer = Math.Ceiling((l + r) / 2)
-        Dim c As Integer = r
-        Dim x As Integer
-        Dim y As Integer
-        Dim z As Integer
-        Dim Median As Integer
-        Dim tempVal As Integer
-        Dim s As Integer
+    Function QuickComparisons(ByVal PassedArray() As Integer, ByRef l As Integer, ByRef r As Integer) As Integer
+        Dim s As Integer = 0
+        Dim counter As Integer = 0
+        If l < r Then
+            s = Partition1(PassedArray, l, r, counter)
+            counter = counter + QuickComparisons(PassedArray, l, s - 1)
+            counter = counter + QuickComparisons(PassedArray, s + 1, r)
+        End If
+        Return counter
+    End Function
+
+    Function MedianOfThreeComparisons(ByVal PassedArray() As Integer, ByRef l As Integer, ByRef r As Integer) As Integer
+        Dim tempL As Integer = l
+        Dim midIndex As Integer = Math.Ceiling((l + r) / 2)
+        Dim tempR As Integer = r
+        Dim x As Integer = 0
+        Dim y As Integer = 0
+        Dim z As Integer = 0
+        Dim median As Integer = 0
+        Dim tempVal As Integer = 0
+        Dim counter As Integer = 0
+        Dim s As Integer = 0
 
         If l < r Then
             x = PassedArray(l)
-            y = PassedArray(b)
+            y = PassedArray(midIndex)
             z = PassedArray(r)
             If x < y < z Then
-                Median = b
+                median = midIndex
             ElseIf x < z < y Then
-                Median = c
+                median = tempR
             ElseIf y < x < z Then
-                Median = a
+                median = tempL
             ElseIf y < z < x Then
-                Median = c
+                Median = tempR
             ElseIf z < y < x Then
-                Median = b
+                median = midIndex
             ElseIf z < x < y Then
-                Median = a
+                median = tempL
             End If
 
-            tempVal = PassedArray(a)
-            PassedArray(a) = PassedArray(Median)
-            PassedArray(Median) = tempVal
+            tempVal = PassedArray(tempL)
+            PassedArray(tempL) = PassedArray(median)
+            PassedArray(median) = tempVal
 
-            s = Partition1(PassedArray, l, r)
-            QuickComparisons(PassedArray, l, s - 1)
-            QuickComparisons(PassedArray, s + 1, r)
+            s = Partition1(PassedArray, l, r, counter)
+            counter = counter + MedianOfThreeComparisons(PassedArray, l, s - 1)
+            counter = counter + MedianOfThreeComparisons(PassedArray, s + 1, r)
         End If
-    End Sub
+        Return counter
+    End Function
 
     Function BubbleComparisons(ByRef PassedArray() As Integer) As Integer
         Dim ArrayToSort() As Integer = PassedArray
@@ -199,20 +181,85 @@
         If CheckSort(ArrayToSort) = True Then
             Return comparisons
         Else
-            MsgBox("ERROR: Array was NOT sorted properly")
+            MsgBox("BubbleComparisons ERROR: Array was NOT sorted properly")
             Return 0
         End If
     End Function
 
-    Function CheckSort(ByRef SortedArray() As Integer) As Boolean
-        Dim a As Integer = UBound(SortedArray) - 1
-        For i = 0 To a
-            If SortedArray(i) > SortedArray(i + 1) Then
-                Return False
-            Else
-                Continue For
-            End If
-        Next
-        Return True
+    Function MergesortComps(ByRef PassedArray() As Integer) As Integer
+        Dim aIndex As Integer = 0,
+            bIndex As Integer = 0,
+            cIndex As Integer = 0,
+            counter As Integer = 0
+
+        If PassedArray.Length > 1 Then
+            Dim bEndIndex As Integer = Math.Floor(PassedArray.Length / 2) - 1,
+                cEndIndex As Integer = Math.Ceiling(PassedArray.Length / 2) - 1
+            Dim ArrayB(bEndIndex) As Integer 'If PassedArray were 99, bEndIndex would be 48, so ArrayB = [0-48]
+            Dim ArrayC(cEndIndex) As Integer 'If PassedArray were 99, cEndIndex would be 49, so ArrayC = [0-49]
+
+            'copy a[0-48] to b[0-48]
+            For bIndex = 0 To bEndIndex
+                ArrayB(bIndex) = PassedArray(aIndex)
+                aIndex = aIndex + 1
+            Next
+
+            'copy a[49-99] to c[0-49]
+            For cIndex = 0 To cEndIndex
+                ArrayC(cIndex) = PassedArray(aIndex)
+                aIndex = aIndex + 1
+            Next
+
+            counter = counter + MergesortComps(ArrayB)
+            counter = counter + MergesortComps(ArrayC)
+            counter = counter + MergesortCompsMerge(PassedArray, ArrayB, ArrayC)
+
+            'Else
+            'Return counter
+        End If
+        Return counter
     End Function
+
+    Function MergesortCompsMerge(ByRef ArrayA() As Integer, ByRef ArrayB() As Integer, ByRef ArrayC() As Integer) As Integer
+        Dim aIndex As Integer = 0,
+            bIndex As Integer = 0,
+            cIndex As Integer = 0,
+            counter As Integer = 0
+        Dim aEnd = ArrayA.Length,
+            bEnd = ArrayB.Length,
+            cEnd = ArrayC.Length
+
+        While bIndex < bEnd And cIndex < cEnd
+            counter += 1
+            If ArrayB(bIndex) <= ArrayC(cIndex) Then
+                ArrayA(aIndex) = ArrayB(bIndex)
+                bIndex = bIndex + 1
+            Else
+                ArrayA(aIndex) = ArrayC(cIndex)
+                cIndex = cIndex + 1
+            End If
+            aIndex = aIndex + 1
+        End While
+
+        'One of the arrays is empty so just copy the remaining elements of the
+        'unempty array into ArrayA. Dont keep count because there are no
+        'comparisons being made.
+        If bIndex = bEnd Then
+            While cIndex < cEnd
+                ArrayA(aIndex) = ArrayC(cIndex)
+                cIndex = cIndex + 1
+                aIndex = aIndex + 1
+            End While
+        Else
+            While bIndex < bEnd
+                ArrayA(aIndex) = ArrayB(bIndex)
+                bIndex = bIndex + 1
+                aIndex = aIndex + 1
+            End While
+        End If
+        Return counter
+    End Function
+
+    'BucketSort
+
 End Module

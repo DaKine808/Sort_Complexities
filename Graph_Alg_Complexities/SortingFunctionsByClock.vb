@@ -29,7 +29,7 @@
         If CheckSort(ArrayToSort) = True Then
             Return (EndTicks - StartTicks)
         Else
-            MsgBox("ERROR: Array was NOT sorted properly")
+            MsgBox("SSTicks ERROR: Array was NOT sorted properly")
             Return 0
         End If
     End Function
@@ -45,9 +45,7 @@
 
         'Create a newArray with sentinel
         ReDim Preserve newArray(0 To UBound(PassedArray) + 1)
-        For r = 0 To UBound(PassedArray)
-            newArray(r + 1) = PassedArray(r)
-        Next
+        PassedArray.CopyTo(newArray, 1)
 
         'Sort newArray
         StartTicks = Environment.TickCount
@@ -69,21 +67,12 @@
         If CheckSort(tempArray) = True Then
             Return (EndTicks - StartTicks)
         Else
-            MsgBox("ERROR: Array was NOT sorted properly")
+            MsgBox("InsertionTicks ERROR: Array was NOT sorted properly")
             Return 0
         End If
     End Function
 
-    Sub QuickTicks(ByVal PassedArray() As Integer, ByRef l As Integer, ByRef r As Integer)
-        Dim s As Integer
-
-        If l < r Then
-            s = Partition2(PassedArray, l, r)
-            QuickTicks(PassedArray, l, s - 1)
-            QuickTicks(PassedArray, s + 1, r)
-        End If
-    End Sub
-
+    'Partition2 is used for both Quicksort and Median-of-3 sort
     Function Partition2(ByVal subArray() As Integer, ByRef l As Integer, ByRef r As Integer)
         Dim p As Integer = subArray(l)
         Dim i As Integer = l
@@ -114,6 +103,16 @@
 
         Return j
     End Function
+
+    Sub QuickTicks(ByVal PassedArray() As Integer, ByRef l As Integer, ByRef r As Integer)
+        Dim s As Integer
+
+        If l < r Then
+            s = Partition2(PassedArray, l, r)
+            QuickTicks(PassedArray, l, s - 1)
+            QuickTicks(PassedArray, s + 1, r)
+        End If
+    End Sub
 
     Sub MedianQuickTicks(ByVal PassedArray() As Integer, ByVal l As Integer, ByRef r As Integer)
         Dim a As Integer = l
@@ -179,12 +178,12 @@
         If CheckSort(ArrayToSort) = True Then
             Return (EndTicks - StartTicks)
         Else
-            MsgBox("ERROR: Array was NOT sorted properly")
+            MsgBox("BubbleTicks ERROR: Array was NOT sorted properly")
             Return 0
         End If
     End Function
 
-    Sub MergeTicks(ByRef PassedArray() As Integer)
+    Sub MergesortTicks(ByRef PassedArray() As Integer)
         Dim aIndex As Integer = 0,
             bIndex As Integer = 0,
             cIndex As Integer = 0
@@ -207,9 +206,9 @@
                 aIndex = aIndex + 1
             Next
 
-            MergeTicks(ArrayB)
-            MergeTicks(ArrayC)
-            Merge(PassedArray, ArrayB, ArrayC)
+            MergesortTicks(ArrayB)
+            MergesortTicks(ArrayC)
+            MergesortTicksMerge(PassedArray, ArrayB, ArrayC)
 
         Else
             Return
@@ -217,7 +216,7 @@
 
     End Sub
 
-    Sub Merge(ByRef ArrayA() As Integer, ByRef ArrayB() As Integer, ByRef ArrayC() As Integer)
+    Sub MergesortTicksMerge(ByRef ArrayA() As Integer, ByRef ArrayB() As Integer, ByRef ArrayC() As Integer)
         Dim aIndex As Integer = 0,
             bIndex As Integer = 0,
             cIndex As Integer = 0
@@ -297,41 +296,12 @@
         If CheckSort(PassedArray) Then
             Return (endTick - startTick)
         Else
-            MsgBox("ERROR: Array was not sorted")
+            MsgBox("BucketSortTicks ERROR: Array was not sorted")
             Return 0
         End If
     End Function
 
-    Function maxIntLen(ByVal PassedArray() As Integer) As Integer
-        Dim maxLength As Integer
-        Dim len As Integer
-        Dim i As Integer
-        For i = 0 To UBound(PassedArray)
-            If PassedArray(i) = 0 Then
-                len = 1
-            Else
-                len = Math.Floor(Math.Log10(Math.Abs(PassedArray(i))))
-            End If
-
-            If len > maxLength Then
-                maxLength = len
-            End If
-        Next
-        Return maxLength
-    End Function
-
     'END SORTING ALGORITHMS COUNTING TICKS
 
-    Function CheckSort(ByRef SortedArray() As Integer) As Boolean
-        Dim a As Integer = UBound(SortedArray) - 1
-        For i = 0 To a
-            If SortedArray(i) > SortedArray(i + 1) Then
-                Return False
-            Else
-                Continue For
-            End If
-        Next
-        Return True
-    End Function
 
 End Module
