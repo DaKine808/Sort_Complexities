@@ -2,6 +2,30 @@
 
 Public Class Form1
 
+    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        Chart1.Series(0).Name = "n"
+        Chart1.Series(0).Color = Color.Black
+        Chart1.Series(0).ChartType = SeriesChartType.Spline
+        Chart1.Series(0).Enabled = False
+
+        Chart1.Series(1).Name = "n^2"
+        Chart1.Series(1).Color = Color.Black
+        Chart1.Series(1).ChartType = SeriesChartType.Spline
+        Chart1.Series(1).Enabled = False
+
+        Chart1.Series(2).Name = "log n"
+        Chart1.Series(2).Color = Color.Black
+        Chart1.Series(2).ChartType = SeriesChartType.Spline
+        Chart1.Series(2).Enabled = False
+
+        Chart1.Series(3).Name = "n log n"
+        Chart1.Series(3).Color = Color.Black
+        Chart1.Series(3).ChartType = SeriesChartType.Spline
+        Chart1.Series(3).Enabled = False
+    End Sub
+
+
     Dim numberOfSeries As Integer = 1
     Dim timeMultiplier As Integer = 1 'Because counting clock cycles causes weird results, when counting them you must
     'adjust how large each array size is. By trial and error, 100 seems to be a good modifier.
@@ -71,7 +95,7 @@ Public Class Form1
             newSeries.Name = "Bubble Sort" & numberOfSeries
         ElseIf MergeSortRadio.Checked Then
             newSeries.Name = "Merge Sort" & numberOfSeries
-        ElseIf VBRadio.Checked Then
+        ElseIf VBSortRadio.Checked Then
             newSeries.Name = "VB Sort" & numberOfSeries
         Else
             newSeries.Name = "Series" & numberOfSeries
@@ -170,7 +194,7 @@ Public Class Form1
                 Else
                     Return 0
                 End If
-            ElseIf VBRadio.Checked Then
+            ElseIf VBSortRadio.Checked Then
                 startTick = Environment.TickCount
                 Array.Sort(refArray)
                 endTick = Environment.TickCount
@@ -185,29 +209,7 @@ Public Class Form1
     End Function
     'END MAIN FUNCTIONS
 
-    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
-        Chart1.Series(0).Name = "n"
-        Chart1.Series(0).Color = Color.Black
-        Chart1.Series(0).ChartType = SeriesChartType.Spline
-        Chart1.Series(0).Enabled = False
-
-        Chart1.Series(1).Name = "n^2"
-        Chart1.Series(1).Color = Color.Black
-        Chart1.Series(1).ChartType = SeriesChartType.Spline
-        Chart1.Series(1).Enabled = False
-
-        Chart1.Series(2).Name = "log n"
-        Chart1.Series(2).Color = Color.Black
-        Chart1.Series(2).ChartType = SeriesChartType.Spline
-        Chart1.Series(2).Enabled = False
-
-        Chart1.Series(3).Name = "n log n"
-        Chart1.Series(3).Color = Color.Black
-        Chart1.Series(3).ChartType = SeriesChartType.Spline
-        Chart1.Series(3).Enabled = False
-    End Sub
-
+   
     'CHANGE IF A SERIES IS ENABLED OR NOT
     Private Sub nVisBtn_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nVisBtn.CheckedChanged
         If nVisBtn.Checked = True Then
@@ -258,7 +260,7 @@ Public Class Form1
     End Sub
     'END CHANGE IF A SERIES IS ENABLED OR NOT
 
-   
+
 
     'PRINT ARRAYS
     Private Sub PrintArray(ByRef refArray1() As Integer)
@@ -305,7 +307,15 @@ Public Class Form1
         numberOfSeries = numberOfSeries + 1
     End Sub
 
+    Private Sub InputSize_ValueChanged(sender As System.Object, e As System.EventArgs) Handles InputSize.ValueChanged
+        UpdateLines()
+    End Sub
+
     Private Sub LineMultiplier_ValueChanged(sender As System.Object, e As System.EventArgs) Handles LineMultiplier.ValueChanged
+        UpdateLines()
+    End Sub
+
+    Private Sub UpdateLines()
         If nVisBtn.Checked = True Then
             nVisBtn.Checked = False
             nVisBtn.Checked = True
@@ -342,8 +352,8 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub VBRadio_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles VBRadio.CheckedChanged
-        If VBRadio.Checked = True Then
+    Private Sub VBSortRadio_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles VBSortRadio.CheckedChanged
+        If VBSortRadio.Checked = True Then
             ClockCyclesRadio.Checked = True
             ComparisonsRadio.Enabled = False
         Else
@@ -352,4 +362,5 @@ Public Class Form1
     End Sub
 
 
+    
 End Class

@@ -34,7 +34,7 @@ Partial Class Form1
         Me.NumOfRuns = New System.Windows.Forms.NumericUpDown()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.BucketSortRadio = New System.Windows.Forms.RadioButton()
-        Me.VBRadio = New System.Windows.Forms.RadioButton()
+        Me.VBSortRadio = New System.Windows.Forms.RadioButton()
         Me.MergeSortRadio = New System.Windows.Forms.RadioButton()
         Me.BubbleSortRadio = New System.Windows.Forms.RadioButton()
         Me.InsertionSortRadio = New System.Windows.Forms.RadioButton()
@@ -64,14 +64,14 @@ Partial Class Form1
         Me.LineMultiplier = New System.Windows.Forms.NumericUpDown()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Panel4 = New System.Windows.Forms.Panel()
-        Me.SelectionSortCheckBox = New System.Windows.Forms.CheckBox()
-        Me.QuickSortCheckBox = New System.Windows.Forms.CheckBox()
-        Me.MedianOf3CheckBox = New System.Windows.Forms.CheckBox()
-        Me.InsertionSortCheckBox = New System.Windows.Forms.CheckBox()
-        Me.BubbleSortCheckBox = New System.Windows.Forms.CheckBox()
-        Me.MergeSortCheckBox = New System.Windows.Forms.CheckBox()
-        Me.BucketSortCheckBox = New System.Windows.Forms.CheckBox()
         Me.VBSortCheckBox = New System.Windows.Forms.CheckBox()
+        Me.BucketSortCheckBox = New System.Windows.Forms.CheckBox()
+        Me.MergeSortCheckBox = New System.Windows.Forms.CheckBox()
+        Me.BubbleSortCheckBox = New System.Windows.Forms.CheckBox()
+        Me.InsertionSortCheckBox = New System.Windows.Forms.CheckBox()
+        Me.MedianOf3CheckBox = New System.Windows.Forms.CheckBox()
+        Me.QuickSortCheckBox = New System.Windows.Forms.CheckBox()
+        Me.SelectionSortCheckBox = New System.Windows.Forms.CheckBox()
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumOfRuns, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
@@ -149,7 +149,7 @@ Partial Class Form1
         '
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel1.Controls.Add(Me.BucketSortRadio)
-        Me.Panel1.Controls.Add(Me.VBRadio)
+        Me.Panel1.Controls.Add(Me.VBSortRadio)
         Me.Panel1.Controls.Add(Me.MergeSortRadio)
         Me.Panel1.Controls.Add(Me.BubbleSortRadio)
         Me.Panel1.Controls.Add(Me.InsertionSortRadio)
@@ -171,15 +171,15 @@ Partial Class Form1
         Me.BucketSortRadio.Text = "Bucket Sort"
         Me.BucketSortRadio.UseVisualStyleBackColor = True
         '
-        'VBRadio
+        'VBSortRadio
         '
-        Me.VBRadio.AutoSize = True
-        Me.VBRadio.Location = New System.Drawing.Point(14, 170)
-        Me.VBRadio.Name = "VBRadio"
-        Me.VBRadio.Size = New System.Drawing.Size(61, 17)
-        Me.VBRadio.TabIndex = 6
-        Me.VBRadio.Text = "VB Sort"
-        Me.VBRadio.UseVisualStyleBackColor = True
+        Me.VBSortRadio.AutoSize = True
+        Me.VBSortRadio.Location = New System.Drawing.Point(14, 170)
+        Me.VBSortRadio.Name = "VBSortRadio"
+        Me.VBSortRadio.Size = New System.Drawing.Size(61, 17)
+        Me.VBSortRadio.TabIndex = 6
+        Me.VBSortRadio.Text = "VB Sort"
+        Me.VBSortRadio.UseVisualStyleBackColor = True
         '
         'MergeSortRadio
         '
@@ -373,7 +373,7 @@ Partial Class Form1
         'NsqrVisBtn
         '
         Me.NsqrVisBtn.AutoSize = True
-        Me.NsqrVisBtn.Location = New System.Drawing.Point(825, 35)
+        Me.NsqrVisBtn.Location = New System.Drawing.Point(825, 79)
         Me.NsqrVisBtn.Name = "NsqrVisBtn"
         Me.NsqrVisBtn.Size = New System.Drawing.Size(77, 17)
         Me.NsqrVisBtn.TabIndex = 21
@@ -383,7 +383,7 @@ Partial Class Form1
         'nVisBtn
         '
         Me.nVisBtn.AutoSize = True
-        Me.nVisBtn.Location = New System.Drawing.Point(825, 12)
+        Me.nVisBtn.Location = New System.Drawing.Point(825, 33)
         Me.nVisBtn.Name = "nVisBtn"
         Me.nVisBtn.Size = New System.Drawing.Size(65, 17)
         Me.nVisBtn.TabIndex = 25
@@ -393,7 +393,7 @@ Partial Class Form1
         'logNVisBtn
         '
         Me.logNVisBtn.AutoSize = True
-        Me.logNVisBtn.Location = New System.Drawing.Point(825, 59)
+        Me.logNVisBtn.Location = New System.Drawing.Point(825, 10)
         Me.logNVisBtn.Name = "logNVisBtn"
         Me.logNVisBtn.Size = New System.Drawing.Size(86, 17)
         Me.logNVisBtn.TabIndex = 26
@@ -403,7 +403,7 @@ Partial Class Form1
         'NlogNVisBtn
         '
         Me.NlogNVisBtn.AutoSize = True
-        Me.NlogNVisBtn.Location = New System.Drawing.Point(825, 83)
+        Me.NlogNVisBtn.Location = New System.Drawing.Point(825, 56)
         Me.NlogNVisBtn.Name = "NlogNVisBtn"
         Me.NlogNVisBtn.Size = New System.Drawing.Size(91, 17)
         Me.NlogNVisBtn.TabIndex = 28
@@ -484,65 +484,15 @@ Partial Class Form1
         Me.Panel4.Size = New System.Drawing.Size(124, 192)
         Me.Panel4.TabIndex = 36
         '
-        'SelectionSortCheckBox
+        'VBSortCheckBox
         '
-        Me.SelectionSortCheckBox.AutoSize = True
-        Me.SelectionSortCheckBox.Location = New System.Drawing.Point(13, 6)
-        Me.SelectionSortCheckBox.Name = "SelectionSortCheckBox"
-        Me.SelectionSortCheckBox.Size = New System.Drawing.Size(92, 17)
-        Me.SelectionSortCheckBox.TabIndex = 0
-        Me.SelectionSortCheckBox.Text = "Selection Sort"
-        Me.SelectionSortCheckBox.UseVisualStyleBackColor = True
-        '
-        'QuickSortCheckBox
-        '
-        Me.QuickSortCheckBox.AutoSize = True
-        Me.QuickSortCheckBox.Location = New System.Drawing.Point(12, 29)
-        Me.QuickSortCheckBox.Name = "QuickSortCheckBox"
-        Me.QuickSortCheckBox.Size = New System.Drawing.Size(76, 17)
-        Me.QuickSortCheckBox.TabIndex = 1
-        Me.QuickSortCheckBox.Text = "Quick Sort"
-        Me.QuickSortCheckBox.UseVisualStyleBackColor = True
-        '
-        'MedianOf3CheckBox
-        '
-        Me.MedianOf3CheckBox.AutoSize = True
-        Me.MedianOf3CheckBox.Location = New System.Drawing.Point(12, 53)
-        Me.MedianOf3CheckBox.Name = "MedianOf3CheckBox"
-        Me.MedianOf3CheckBox.Size = New System.Drawing.Size(82, 17)
-        Me.MedianOf3CheckBox.TabIndex = 2
-        Me.MedianOf3CheckBox.Text = "Median-of-3"
-        Me.MedianOf3CheckBox.UseVisualStyleBackColor = True
-        '
-        'InsertionSortCheckBox
-        '
-        Me.InsertionSortCheckBox.AutoSize = True
-        Me.InsertionSortCheckBox.Location = New System.Drawing.Point(12, 77)
-        Me.InsertionSortCheckBox.Name = "InsertionSortCheckBox"
-        Me.InsertionSortCheckBox.Size = New System.Drawing.Size(88, 17)
-        Me.InsertionSortCheckBox.TabIndex = 3
-        Me.InsertionSortCheckBox.Text = "Insertion Sort"
-        Me.InsertionSortCheckBox.UseVisualStyleBackColor = True
-        '
-        'BubbleSortCheckBox
-        '
-        Me.BubbleSortCheckBox.AutoSize = True
-        Me.BubbleSortCheckBox.Location = New System.Drawing.Point(13, 101)
-        Me.BubbleSortCheckBox.Name = "BubbleSortCheckBox"
-        Me.BubbleSortCheckBox.Size = New System.Drawing.Size(81, 17)
-        Me.BubbleSortCheckBox.TabIndex = 4
-        Me.BubbleSortCheckBox.Text = "Bubble Sort"
-        Me.BubbleSortCheckBox.UseVisualStyleBackColor = True
-        '
-        'MergeSortCheckBox
-        '
-        Me.MergeSortCheckBox.AutoSize = True
-        Me.MergeSortCheckBox.Location = New System.Drawing.Point(13, 125)
-        Me.MergeSortCheckBox.Name = "MergeSortCheckBox"
-        Me.MergeSortCheckBox.Size = New System.Drawing.Size(78, 17)
-        Me.MergeSortCheckBox.TabIndex = 5
-        Me.MergeSortCheckBox.Text = "Merge Sort"
-        Me.MergeSortCheckBox.UseVisualStyleBackColor = True
+        Me.VBSortCheckBox.AutoSize = True
+        Me.VBSortCheckBox.Location = New System.Drawing.Point(13, 171)
+        Me.VBSortCheckBox.Name = "VBSortCheckBox"
+        Me.VBSortCheckBox.Size = New System.Drawing.Size(62, 17)
+        Me.VBSortCheckBox.TabIndex = 7
+        Me.VBSortCheckBox.Text = "VB Sort"
+        Me.VBSortCheckBox.UseVisualStyleBackColor = True
         '
         'BucketSortCheckBox
         '
@@ -554,15 +504,65 @@ Partial Class Form1
         Me.BucketSortCheckBox.Text = "Bucket Sort"
         Me.BucketSortCheckBox.UseVisualStyleBackColor = True
         '
-        'VBSortCheckBox
+        'MergeSortCheckBox
         '
-        Me.VBSortCheckBox.AutoSize = True
-        Me.VBSortCheckBox.Location = New System.Drawing.Point(13, 171)
-        Me.VBSortCheckBox.Name = "VBSortCheckBox"
-        Me.VBSortCheckBox.Size = New System.Drawing.Size(62, 17)
-        Me.VBSortCheckBox.TabIndex = 7
-        Me.VBSortCheckBox.Text = "VB Sort"
-        Me.VBSortCheckBox.UseVisualStyleBackColor = True
+        Me.MergeSortCheckBox.AutoSize = True
+        Me.MergeSortCheckBox.Location = New System.Drawing.Point(13, 125)
+        Me.MergeSortCheckBox.Name = "MergeSortCheckBox"
+        Me.MergeSortCheckBox.Size = New System.Drawing.Size(78, 17)
+        Me.MergeSortCheckBox.TabIndex = 5
+        Me.MergeSortCheckBox.Text = "Merge Sort"
+        Me.MergeSortCheckBox.UseVisualStyleBackColor = True
+        '
+        'BubbleSortCheckBox
+        '
+        Me.BubbleSortCheckBox.AutoSize = True
+        Me.BubbleSortCheckBox.Location = New System.Drawing.Point(13, 101)
+        Me.BubbleSortCheckBox.Name = "BubbleSortCheckBox"
+        Me.BubbleSortCheckBox.Size = New System.Drawing.Size(81, 17)
+        Me.BubbleSortCheckBox.TabIndex = 4
+        Me.BubbleSortCheckBox.Text = "Bubble Sort"
+        Me.BubbleSortCheckBox.UseVisualStyleBackColor = True
+        '
+        'InsertionSortCheckBox
+        '
+        Me.InsertionSortCheckBox.AutoSize = True
+        Me.InsertionSortCheckBox.Location = New System.Drawing.Point(12, 77)
+        Me.InsertionSortCheckBox.Name = "InsertionSortCheckBox"
+        Me.InsertionSortCheckBox.Size = New System.Drawing.Size(88, 17)
+        Me.InsertionSortCheckBox.TabIndex = 3
+        Me.InsertionSortCheckBox.Text = "Insertion Sort"
+        Me.InsertionSortCheckBox.UseVisualStyleBackColor = True
+        '
+        'MedianOf3CheckBox
+        '
+        Me.MedianOf3CheckBox.AutoSize = True
+        Me.MedianOf3CheckBox.Location = New System.Drawing.Point(12, 53)
+        Me.MedianOf3CheckBox.Name = "MedianOf3CheckBox"
+        Me.MedianOf3CheckBox.Size = New System.Drawing.Size(82, 17)
+        Me.MedianOf3CheckBox.TabIndex = 2
+        Me.MedianOf3CheckBox.Text = "Median-of-3"
+        Me.MedianOf3CheckBox.UseVisualStyleBackColor = True
+        '
+        'QuickSortCheckBox
+        '
+        Me.QuickSortCheckBox.AutoSize = True
+        Me.QuickSortCheckBox.Location = New System.Drawing.Point(12, 29)
+        Me.QuickSortCheckBox.Name = "QuickSortCheckBox"
+        Me.QuickSortCheckBox.Size = New System.Drawing.Size(76, 17)
+        Me.QuickSortCheckBox.TabIndex = 1
+        Me.QuickSortCheckBox.Text = "Quick Sort"
+        Me.QuickSortCheckBox.UseVisualStyleBackColor = True
+        '
+        'SelectionSortCheckBox
+        '
+        Me.SelectionSortCheckBox.AutoSize = True
+        Me.SelectionSortCheckBox.Location = New System.Drawing.Point(13, 6)
+        Me.SelectionSortCheckBox.Name = "SelectionSortCheckBox"
+        Me.SelectionSortCheckBox.Size = New System.Drawing.Size(92, 17)
+        Me.SelectionSortCheckBox.TabIndex = 0
+        Me.SelectionSortCheckBox.Text = "Selection Sort"
+        Me.SelectionSortCheckBox.UseVisualStyleBackColor = True
         '
         'Form1
         '
@@ -642,7 +642,7 @@ Partial Class Form1
     Friend WithEvents LineMultiplier As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents MergeSortRadio As System.Windows.Forms.RadioButton
-    Friend WithEvents VBRadio As System.Windows.Forms.RadioButton
+    Friend WithEvents VBSortRadio As System.Windows.Forms.RadioButton
     Friend WithEvents BucketSortRadio As System.Windows.Forms.RadioButton
     Friend WithEvents Panel4 As System.Windows.Forms.Panel
     Friend WithEvents VBSortCheckBox As System.Windows.Forms.CheckBox

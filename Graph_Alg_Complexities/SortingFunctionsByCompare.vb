@@ -230,7 +230,7 @@
             cEnd = ArrayC.Length
 
         While bIndex < bEnd And cIndex < cEnd
-            counter += 1
+            counter = counter + 1
             If ArrayB(bIndex) <= ArrayC(cIndex) Then
                 ArrayA(aIndex) = ArrayB(bIndex)
                 bIndex = bIndex + 1
