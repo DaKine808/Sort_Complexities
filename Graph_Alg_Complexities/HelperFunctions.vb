@@ -1,7 +1,8 @@
 ﻿Module HelperFunctions
 
-    Function CheckSort(ByRef SortedArray() As Integer) As Boolean
+    Function CheckSort(ByRef SortedArray() As Int64) As Boolean
         Dim a As Integer = UBound(SortedArray) - 1
+
         For i = 0 To a
             If SortedArray(i) > SortedArray(i + 1) Then
                 MsgBox("ERROR: Array was not sorted")
@@ -13,22 +14,19 @@
         Return True
     End Function
 
-    Function maxIntLen(ByVal PassedArray() As Integer) As Integer
-        Dim maxLength As Integer
-        Dim len As Integer
-        Dim i As Integer
-        For i = 0 To UBound(PassedArray)
-            If PassedArray(i) = 0 Then
-                len = 1
-            Else
-                len = Math.Floor(Math.Log10(Math.Abs(PassedArray(i))))
-            End If
+    Function maxIntLen(ByVal PassedArray() As Int64) As Integer
+        Dim maxInt As Integer
+        Dim minInt As Integer
 
-            If len > maxLength Then
-                maxLength = len
-            End If
-        Next
-        Return maxLength
+        maxInt = PassedArray.Max().ToString.Length
+        minInt = Math.Abs(PassedArray.Min()).ToString.Length
+
+        If minInt < maxInt Then
+            Return maxInt
+        Else
+            Return minInt
+        End If
+
     End Function
 
 End Module

@@ -1,20 +1,20 @@
 ﻿Module SortingFunctionsByClock
 
     'SORTING ALGORITHMS COUNTING TICKS
-    Function SSTicks(ByRef PassedArray() As Integer) As Long
-        Dim ArrayToSort() As Integer = PassedArray
-        Dim lastElement As Integer = UBound(ArrayToSort)
-        Dim min As Integer
+    Function SSTicks(ByRef PassedArray() As Int64) As Long
+        Dim ArrayToSort() As Int64 = PassedArray
+        Dim tempInt As Int64
+        Dim lastIndex As Integer = UBound(ArrayToSort)
+        Dim min As Integer 'Stores an index
         Dim comparisons As Integer = 0
-        Dim tempInt As Integer
-        Dim StartTicks As Long
-        Dim EndTicks As Long
+        Dim StartTicks,
+            EndTicks As Long
 
         'Sort(ArrayToSort())
         StartTicks = Environment.TickCount
-        For i = 0 To lastElement - 1
+        For i = 0 To lastIndex - 1
             min = i
-            For j = i + 1 To lastElement
+            For j = i + 1 To lastIndex
                 If ArrayToSort(j) < ArrayToSort(min) Then
                     min = j
                 End If
@@ -34,14 +34,14 @@
         End If
     End Function
 
-    Function InsertionTicks(ByRef PassedArray() As Integer) As Long
-        Dim newArray() As Integer = {-9999}
+    Function InsertionTicks(ByRef PassedArray() As Int64) As Long
+        Dim newArray() As Int64 = {-9999}
         Dim a As Integer = UBound(newArray)
-        Dim tempArray(UBound(PassedArray)) As Integer
-        Dim v As Integer
-        Dim j As Integer
-        Dim StartTicks As Long
-        Dim EndTicks As Long
+        Dim tempArray(UBound(PassedArray)) As Int64
+        Dim v As Int64
+        Dim j As Integer 'Stores an index so it doesn't need to be Int64
+        Dim StartTicks,
+            EndTicks As Long
 
         'Create a newArray with sentinel
         ReDim Preserve newArray(0 To UBound(PassedArray) + 1)
@@ -73,15 +73,15 @@
     End Function
 
     'Partition2 is used for both Quicksort and Median-of-3 sort
-    Function Partition2(ByVal subArray() As Integer, ByRef l As Integer, ByRef r As Integer)
-        Dim p As Integer = subArray(l)
-        Dim i As Integer = l
-        Dim j As Integer = r + 1
-        Dim tempValue As Integer = 0
+    Function Partition2(ByVal subArray() As Int64, ByRef leftIndex As Integer, ByRef rightIndex As Integer) As Integer
+        Dim p As Int64 = subArray(leftIndex)
+        Dim i As Integer = leftIndex,
+            j As Integer = rightIndex + 1,
+            tempValue As Integer = 0
 
         Do Until i >= j
             i = i + 1
-            Do Until subArray(i) >= p Or i = r
+            Do Until subArray(i) >= p Or i = rightIndex
                 i = i + 1
             Loop
             j = j - 1
@@ -97,15 +97,15 @@
         subArray(i) = subArray(j)
         subArray(j) = tempValue
 
-        tempValue = subArray(l)
-        subArray(l) = subArray(j)
+        tempValue = subArray(leftIndex)
+        subArray(leftIndex) = subArray(j)
         subArray(j) = tempValue
 
         Return j
     End Function
 
-    Sub QuickTicks(ByVal PassedArray() As Integer, ByRef l As Integer, ByRef r As Integer)
-        Dim s As Integer
+    Sub QuickTicks(ByVal PassedArray() As Int64, ByRef l As Integer, ByRef r As Integer)
+        Dim s As Integer 'Stores an index so it doesn't need to be Int64
 
         If l < r Then
             s = Partition2(PassedArray, l, r)
@@ -114,52 +114,50 @@
         End If
     End Sub
 
-    Sub MedianQuickTicks(ByVal PassedArray() As Integer, ByVal l As Integer, ByRef r As Integer)
-        Dim a As Integer = l
-        Dim b As Integer = Math.Ceiling((l + r) / 2)
-        Dim c As Integer = r
-        Dim x As Integer
-        Dim y As Integer
-        Dim z As Integer
-        Dim Median As Integer
-        Dim tempVal As Integer
-        Dim s As Integer
+    Sub MedianQuickTicks(ByVal PassedArray() As Int64, ByVal leftIndex As Integer, ByRef rightIndex As Integer)
+        Dim midIndex As Integer = Math.Ceiling((leftIndex + rightIndex) / 2)
+        Dim x As Int64 = 0,
+            y As Int64 = 0,
+            z As Int64 = 0
+        Dim median As Integer = 0,
+            tempVal As Integer = 0,
+            s As Integer = 0 'Stores an index so it doesn't need to be Int64
 
-        If l < r Then
-            x = PassedArray(l)
-            y = PassedArray(b)
-            z = PassedArray(r)
-            If x < y < z Then
-                Median = b
-            ElseIf x < z < y Then
-                Median = c
-            ElseIf y < x < z Then
-                Median = a
-            ElseIf y < z < x Then
-                Median = c
-            ElseIf z < y < x Then
-                Median = b
-            ElseIf z < x < y Then
-                Median = a
+        If leftIndex < rightIndex Then
+            Dim tempArray(3) As Int64
+            x = PassedArray(leftIndex)
+            y = PassedArray(midIndex)
+            z = PassedArray(rightIndex)
+
+            tempArray(0) = x
+            tempArray(1) = y
+            tempArray(2) = z
+            Array.Sort(tempArray)
+            If x = tempArray(1) Then
+                median = leftIndex
+            ElseIf y = tempArray(1) Then
+                median = midIndex
+            Else
+                median = rightIndex
             End If
 
-            tempVal = PassedArray(a)
-            PassedArray(a) = PassedArray(Median)
-            PassedArray(Median) = tempVal
+            tempVal = PassedArray(leftIndex)
+            PassedArray(leftIndex) = PassedArray(median)
+            PassedArray(median) = tempVal
 
-            s = Partition2(PassedArray, l, r)
-            MedianQuickTicks(PassedArray, l, s - 1)
-            MedianQuickTicks(PassedArray, s + 1, r)
+            s = Partition2(PassedArray, leftIndex, rightIndex)
+            MedianQuickTicks(PassedArray, leftIndex, s - 1)
+            MedianQuickTicks(PassedArray, s + 1, rightIndex)
         End If
     End Sub
 
-    Function BubbleTicks(ByRef PassedArray() As Integer) As Long
-        Dim ArrayToSort() As Integer = PassedArray
+    Function BubbleTicks(ByRef PassedArray() As Int64) As Long
+        Dim ArrayToSort() As Int64 = PassedArray
         Dim swaps As Integer = 1
         Dim lastElement As Integer = UBound(PassedArray)
-        Dim temp As Integer
-        Dim StartTicks As Long
-        Dim EndTicks As Long
+        Dim temp As Int64
+        Dim StartTicks,
+            EndTicks As Long
 
         StartTicks = Environment.TickCount
         While (swaps > 0)
@@ -183,7 +181,7 @@
         End If
     End Function
 
-    Sub MergesortTicks(ByRef PassedArray() As Integer)
+    Sub MergesortTicks(ByRef PassedArray() As Int64)
         Dim aIndex As Integer = 0,
             bIndex As Integer = 0,
             cIndex As Integer = 0
@@ -191,8 +189,8 @@
         If PassedArray.Length > 1 Then
             Dim bEndIndex As Integer = Math.Floor(PassedArray.Length / 2) - 1,
                 cEndIndex As Integer = Math.Ceiling(PassedArray.Length / 2) - 1
-            Dim ArrayB(bEndIndex) As Integer 'If PassedArray were 99, bEndIndex would be 48, so ArrayB = [0-48]
-            Dim ArrayC(cEndIndex) As Integer 'If PassedArray were 99, cEndIndex would be 49, so ArrayC = [0-49]
+            Dim ArrayB(bEndIndex) As Int64 'If PassedArray were 99, bEndIndex would be 48, so ArrayB = [0-48]
+            Dim ArrayC(cEndIndex) As Int64 'If PassedArray were 99, cEndIndex would be 49, so ArrayC = [0-49]
 
             'copy a[0-48] to b[0-48]
             For bIndex = 0 To bEndIndex
@@ -216,7 +214,7 @@
 
     End Sub
 
-    Sub MergesortTicksMerge(ByRef ArrayA() As Integer, ByRef ArrayB() As Integer, ByRef ArrayC() As Integer)
+    Sub MergesortTicksMerge(ByRef ArrayA() As Int64, ByRef ArrayB() As Int64, ByRef ArrayC() As Int64)
         Dim aIndex As Integer = 0,
             bIndex As Integer = 0,
             cIndex As Integer = 0
@@ -250,24 +248,24 @@
         End If
     End Sub
 
-    Function BucketSort(ByRef PassedArray() As Integer) As Long
-        Dim buckets(9) As List(Of Integer)
+    Function BucketSort(ByRef PassedArray() As Int64) As Long
+        Dim buckets(9) As List(Of Int64)
 
         Dim tempIndex As Integer,
             arrayIndex As Integer,
             bucketIndex As Integer
 
-        Dim maxLen = maxIntLen(PassedArray)
+        Dim maxLen As Integer = maxIntLen(PassedArray)
         Dim exp As Integer
-        Dim digit As Integer = 1
-        Dim temp As Integer = 0
-        Dim valAtIndex As Integer = 0
+        Dim digit As Int64 = 1
+        Dim temp As Int64 = 0
+        Dim valAtIndex As Int64 = 0
         Dim startTick As Long,
             endTick As Long
 
         buckets.Initialize()
         For i As Integer = 0 To 9
-            buckets(i) = New List(Of Integer)
+            buckets(i) = New List(Of Int64)
         Next
 
         startTick = Environment.TickCount

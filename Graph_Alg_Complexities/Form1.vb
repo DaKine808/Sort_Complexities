@@ -33,7 +33,7 @@ Public Class Form1
     'MAIN FUNCTIONS
     Private Sub AutomatedButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AutomatedButton.Click
         'Dim AvgResult As Double
-        Dim tempArray() As Integer
+        Dim tempArray() As Int64
         Dim x As Integer = InputSize.Value 'Max size of array to be created
         Dim y As Integer = NumOfRuns.Value 'Number of times to run the test. Be sure to change size of ResultsArray if value of y is changed.
         Dim SortTrend(x) As Double 'Will hold the averages that will be plotted.
@@ -47,7 +47,7 @@ Public Class Form1
             SortTrend(0) = 0
             SortTrend(1) = 0
             For j = 1 To x
-                temp = (j * ClockArrayMult) - 1
+                temp = j '(j * ClockArrayMult) - 1
                 For k = 0 To y
                     If IncArrayRadio.Checked Then
                         tempArray = CreateIncreasingArray2(temp)
@@ -55,7 +55,7 @@ Public Class Form1
                         tempArray = CreateDecreasingArray(temp)
                     ElseIf NearlySortedRadio.Checked = True Then
                         tempArray = CreateNearlySortedArray(temp)
-                    ElseIf RandomRadio.Checked = True Then
+                    Else
                         tempArray = CreateRandomArray(temp)
                     End If
                     ResultsArray(k) = NextStep(tempArray)
@@ -73,7 +73,7 @@ Public Class Form1
                         tempArray = CreateDecreasingArray(h - 1)
                     ElseIf NearlySortedRadio.Checked = True Then
                         tempArray = CreateNearlySortedArray(h - 1)
-                    ElseIf RandomRadio.Checked = True Then
+                    Else
                         tempArray = CreateRandomArray(h - 1)
                     End If
                     ResultsArray(i) = NextStep(tempArray)
@@ -108,7 +108,7 @@ Public Class Form1
         newSeries.ChartType = SeriesChartType.Spline
     End Sub
 
-    Private Function NextStep(ByRef refArray() As Integer)
+    Private Function NextStep(ByRef refArray() As Int64)
         Dim tempResult As Integer = 0
         Dim startTick As Long
         Dim endTick As Long
@@ -143,69 +143,72 @@ Public Class Form1
                 If CheckSort(refArray) Then
                     Return tempResult
                 Else
+                    TextBox1.AppendText("Error!")
+                    TextBox1.AppendText(vbNewLine)
+                    'PrintSortedArray(refArray)
                     Return 0
                 End If
-            ElseIf BubbleSortRadio.Checked Then
-                Return BubbleComparisons(refArray)
+                ElseIf BubbleSortRadio.Checked Then
+                    Return BubbleComparisons(refArray)
+                End If
+            ElseIf ClockCyclesRadio.Checked = True Then
+                If SelectionSortRadio.Checked Then
+                    Return SSTicks(refArray)
+                ElseIf InsertionSortRadio.Checked Then
+                    Return InsertionTicks(refArray)
+                ElseIf QuickSortRadio.Checked Then
+                    If DisplayBox.Checked Then
+                        PrintUnsortedArray(refArray)
+                    End If
+                    startTick = Environment.TickCount
+                    QuickTicks(refArray, 0, UBound(refArray))
+                    endTick = Environment.TickCount
+                    If CheckSort(refArray) Then
+                        Return (endTick - startTick)
+                    Else
+                        Return 0
+                    End If
+                ElseIf MedianQuickRadio.Checked Then
+                    If DisplayBox.Checked Then
+                        PrintUnsortedArray(refArray)
+                    End If
+                    startTick = Environment.TickCount
+                    MedianQuickTicks(refArray, 0, UBound(refArray))
+                    endTick = Environment.TickCount
+                    If CheckSort(refArray) Then
+                        Return (endTick - startTick)
+                    Else
+                        Return 0
+                    End If
+                ElseIf BubbleSortRadio.Checked Then
+                    Return BubbleTicks(refArray)
+                ElseIf MergeSortRadio.Checked Then
+                    If DisplayBox.Checked Then
+                        PrintUnsortedArray(refArray)
+                    End If
+                    startTick = Environment.TickCount
+                    MergesortTicks(refArray)
+                    endTick = Environment.TickCount
+                    If DisplayBox.Checked Then
+                        PrintSortedArray(refArray)
+                    End If
+                    If CheckSort(refArray) Then
+                        Return (endTick - startTick)
+                    Else
+                        Return 0
+                    End If
+                ElseIf VBSortRadio.Checked Then
+                    startTick = Environment.TickCount
+                    Array.Sort(refArray)
+                    endTick = Environment.TickCount
+                    Return (endTick - startTick)
+                ElseIf BucketSortRadio.Checked Then
+                    Return BucketSort(refArray)
+                End If
             End If
-        ElseIf ClockCyclesRadio.Checked = True Then
-            If SelectionSortRadio.Checked Then
-                Return SSTicks(refArray)
-            ElseIf InsertionSortRadio.Checked Then
-                Return InsertionTicks(refArray)
-            ElseIf QuickSortRadio.Checked Then
-                If DisplayBox.Checked Then
-                    PrintUnsortedArray(refArray)
-                End If
-                startTick = Environment.TickCount
-                QuickTicks(refArray, 0, UBound(refArray))
-                endTick = Environment.TickCount
-                If CheckSort(refArray) Then
-                    Return (endTick - startTick)
-                Else
-                    Return 0
-                End If
-            ElseIf MedianQuickRadio.Checked Then
-                If DisplayBox.Checked Then
-                    PrintUnsortedArray(refArray)
-                End If
-                startTick = Environment.TickCount
-                MedianQuickTicks(refArray, 0, UBound(refArray))
-                endTick = Environment.TickCount
-                If CheckSort(refArray) Then
-                    Return (endTick - startTick)
-                Else
-                    Return 0
-                End If
-            ElseIf BubbleSortRadio.Checked Then
-                Return BubbleTicks(refArray)
-            ElseIf MergeSortRadio.Checked Then
-                If DisplayBox.Checked Then
-                    PrintUnsortedArray(refArray)
-                End If
-                startTick = Environment.TickCount
-                MergesortTicks(refArray)
-                endTick = Environment.TickCount
-                If DisplayBox.Checked Then
-                    PrintSortedArray(refArray)
-                End If
-                If CheckSort(refArray) Then
-                    Return (endTick - startTick)
-                Else
-                    Return 0
-                End If
-            ElseIf VBSortRadio.Checked Then
-                startTick = Environment.TickCount
-                Array.Sort(refArray)
-                endTick = Environment.TickCount
-                Return (endTick - startTick)
-            ElseIf BucketSortRadio.Checked Then
-                Return BucketSort(refArray)
-            End If
-        End If
 
-        MsgBox("ERROR: A sorting alogrithm was not selected!")
-        Return 0
+            MsgBox("ERROR: A sorting alogrithm was not selected!")
+            Return 0
     End Function
     'END MAIN FUNCTIONS
 
@@ -263,19 +266,19 @@ Public Class Form1
 
 
     'PRINT ARRAYS
-    Private Sub PrintArray(ByRef refArray1() As Integer)
+    Private Sub PrintArray(ByRef refArray1() As Int64)
         For q = 0 To UBound(refArray1)
             TextBox1.AppendText(refArray1(q) & ", ")
         Next
         TextBox1.AppendText(vbNewLine)
     End Sub
 
-    Private Sub PrintUnsortedArray(ByRef refArray1() As Integer)
+    Private Sub PrintUnsortedArray(ByRef refArray1() As Int64)
         TextBox1.AppendText("Unsorted array: ")
         PrintArray(refArray1)
     End Sub
 
-    Private Sub PrintSortedArray(ByRef refArray1() As Integer)
+    Private Sub PrintSortedArray(ByRef refArray1() As Int64)
         TextBox1.AppendText("Sorted array: ")
         PrintArray(refArray1)
     End Sub
