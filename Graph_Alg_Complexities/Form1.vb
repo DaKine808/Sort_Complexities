@@ -25,194 +25,118 @@ Public Class Form1
         Chart1.Series(3).Enabled = False
     End Sub
 
+    Delegate Function mySort(ByVal passedArray() As Int64, ByRef comparisons As Integer) As Long
 
     Dim numberOfSeries As Integer = 1
-    Dim timeMultiplier As Integer = 1 'Because counting clock cycles causes weird results, when counting them you must
-    'adjust how large each array size is. By trial and error, 100 seems to be a good modifier.
+
+    'Because counting clock cycles causes weird results, when counting them I
+    'adjust how many runs of each array size there will be. From trial and 
+    'error 10 seems to be a good modifier.
+    Dim timeMultiplier As Integer = 10
 
     'MAIN FUNCTIONS
-    Private Sub AutomatedButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AutomatedButton.Click
-        'Dim AvgResult As Double
-        Dim tempArray() As Int64
-        Dim x As Integer = InputSize.Value 'Max size of array to be created
-        Dim y As Integer = NumOfRuns.Value 'Number of times to run the test. Be sure to change size of ResultsArray if value of y is changed.
-        Dim SortTrend(x) As Double 'Will hold the averages that will be plotted.
-        Dim ResultsArray(y) As Integer 'Will hold the results for multiple runs of a single array size, which is then added and stored in SortTrend.
-        Dim newSeries As New Series
-        Dim ClockArrayMult As Integer = 10
-        Dim temp As Integer
+    Private Sub BeginSorting_Click(sender As System.Object, e As System.EventArgs) Handles BeginSorting.Click
+        Dim numberOfSorts As Integer = SortList.SelectedItems.Count()
+        Dim totalSorts As Integer = SortList.Items.Count()
+
+        If numberOfSorts = 0 Then
+            MsgBox("Error: You didn't select at least 1 sort.")
+            Return
+        End If
+
+        Dim sortDict As New Dictionary(Of String, mySort) From
+            {{"Selection Sort", AddressOf SSComparisons},
+             {"Quick Sort", AddressOf QuickSortWrapper},
+             {"Median Of 3", AddressOf MedianOfThreeWrapper},
+             {"Insertion Sort", AddressOf InsertionComparisons},
+             {"Bubble Sort", AddressOf BubbleComparisons},
+             {"Merge Sort", AddressOf MergeSortWrapper},
+             {"Bucket Sort", AddressOf BucketSortComp},
+             {"VisualBasic Sort", AddressOf VBSortComps}
+            }
+
         TextBox1.Clear()
+        Dim time As Integer = 0,
+            comps As Integer = 1
+        'tempArray is used to store the "unsorted" array that is used by all the sort functions selected
+        Dim tempArray() As Int64
+        'averages will store the average results of all 8 sorts for both time(0) and comparisons(1)
+        'once done, averages will be written to a file
+        Dim averages(7, 1, InputSize.Value) As Double
+        averages.Initialize()
+        'results will temporarily hold the results of all 8 sorts for both time(0) and comparisons(1) before
+        'they are averaged and stored in the averages array
+        Dim results(7, 1, NumOfRuns.Value * timeMultiplier) As Int64
+        results.Initialize()
+        Dim comparisons As Integer = 0
+        Dim arrayType As Func(Of Integer, Array)
+        Dim arrayTypeName As String
 
-        If ClockCyclesRadio.Checked = True Then
-            SortTrend(0) = 0
-            SortTrend(1) = 0
-            For j = 1 To x
-                temp = j '(j * ClockArrayMult) - 1
-                For k = 0 To y
-                    If IncArrayRadio.Checked Then
-                        tempArray = CreateIncreasingArray2(temp)
-                    ElseIf DecArrayRadio.Checked = True Then
-                        tempArray = CreateDecreasingArray(temp)
-                    ElseIf NearlySortedRadio.Checked = True Then
-                        tempArray = CreateNearlySortedArray(temp)
-                    Else
-                        tempArray = CreateRandomArray(temp)
-                    End If
-                    ResultsArray(k) = NextStep(tempArray)
-                Next
-                SortTrend(j) = ResultsArray.Average
-            Next
-        ElseIf ComparisonsRadio.Checked Then
-            SortTrend(0) = 0
-            SortTrend(1) = 0
-            For h = 2 To x
-                For i = 0 To y
-                    If IncArrayRadio.Checked = True Then
-                        tempArray = CreateIncreasingArray2(h - 1)
-                    ElseIf DecArrayRadio.Checked = True Then
-                        tempArray = CreateDecreasingArray(h - 1)
-                    ElseIf NearlySortedRadio.Checked = True Then
-                        tempArray = CreateNearlySortedArray(h - 1)
-                    Else
-                        tempArray = CreateRandomArray(h - 1)
-                    End If
-                    ResultsArray(i) = NextStep(tempArray)
-                Next
-                SortTrend(h) = ResultsArray.Average
-            Next
-        End If
-
-        Chart1.Series.Add(newSeries)
-        If SelectionSortRadio.Checked Then
-            newSeries.Name = "Selection Sort " & numberOfSeries
-        ElseIf QuickSortRadio.Checked Then
-            newSeries.Name = "Quicksort " & numberOfSeries
-        ElseIf MedianQuickRadio.Checked Then
-            newSeries.Name = "Median of 3 " & numberOfSeries
-        ElseIf InsertionSortRadio.Checked Then
-            newSeries.Name = "Insertion Sort " & numberOfSeries
-        ElseIf BubbleSortRadio.Checked Then
-            newSeries.Name = "Bubble Sort" & numberOfSeries
-        ElseIf MergeSortRadio.Checked Then
-            newSeries.Name = "Merge Sort" & numberOfSeries
-        ElseIf VBSortRadio.Checked Then
-            newSeries.Name = "VB Sort" & numberOfSeries
+        If IncArrayRadio.Checked = True Then
+            arrayTypeName = "Increasing_Array"
+            arrayType = AddressOf CreateIncreasingArray2
+        ElseIf DecArrayRadio.Checked = True Then
+            arrayTypeName = "Decreasing_Array"
+            arrayType = AddressOf CreateDecreasingArray
+        ElseIf NearlySortedRadio.Checked = True Then
+            arrayTypeName = "Nearly_Sorted_Array"
+            arrayType = AddressOf CreateNearlySortedArray
         Else
-            newSeries.Name = "Series" & numberOfSeries
+            arrayTypeName = "Random_Array"
+            arrayType = AddressOf CreateRandomArray
         End If
 
-        numberOfSeries = numberOfSeries + 1
-        For s = 0 To x
-            newSeries.Points.AddXY(s, SortTrend(s))
+        For arraySize = 2 To InputSize.Value
+            results.Initialize()
+            For run = 0 To NumOfRuns.Value * timeMultiplier
+                'Generate the array to be used by all of the selected sorts
+                tempArray = arrayType(arraySize)
+                'Run the "unsorted" array through all of the selected sorts
+                For sortIndex = 0 To numberOfSorts
+                    If SortList.CheckedIndices.Contains(sortIndex) Then
+                        comparisons = 0
+                        results(sortIndex, time, run) = sortDict.ElementAt(sortIndex).Value(tempArray, comparisons)
+                        results(sortIndex, comps, run) = comparisons
+                    End If
+                Next
+            Next
+            'Now that all of the runs for an arraysize are done
+            'calculate the averages and store them in the averages array
+            For index = 0 To totalSorts
+                If SortList.CheckedIndices.Contains(index) Then
+                    averages(index, time, arraySize) = calcAverage(results, index, time)
+                    averages(index, comps, arraySize) = calcAverage(results, index, comps)
+                End If
+            Next
         Next
-        newSeries.ChartType = SeriesChartType.Spline
-    End Sub
 
-    Private Function NextStep(ByRef refArray() As Int64)
-        Dim tempResult As Integer = 0
-        Dim startTick As Long
-        Dim endTick As Long
-
-
-        If ComparisonsRadio.Checked Then
-            If SelectionSortRadio.Checked Then
-                Return SSComparisons(refArray)
-            ElseIf InsertionSortRadio.Checked = True Then
-                Return InsertionComparisons(refArray)
-            ElseIf QuickSortRadio.Checked Then
-                If DisplayBox.Checked Then
-                    PrintUnsortedArray(refArray)
-                End If
-                tempResult = QuickComparisons(refArray, 0, UBound(refArray))
-                If DisplayBox.Checked Then
-                    PrintSortedArray(refArray)
-                End If
-                If CheckSort(refArray) Then
-                    Return tempResult
-                Else
-                    Return 0
-                End If
-            ElseIf MedianQuickRadio.Checked Then
-                If DisplayBox.Checked Then
-                    PrintUnsortedArray(refArray)
-                End If
-                tempResult = MedianOfThreeComparisons(refArray, 0, UBound(refArray))
-                If DisplayBox.Checked Then
-                    PrintSortedArray(refArray)
-                End If
-                If CheckSort(refArray) Then
-                    Return tempResult
-                Else
-                    TextBox1.AppendText("Error!")
-                    TextBox1.AppendText(vbNewLine)
-                    'PrintSortedArray(refArray)
-                    Return 0
-                End If
-                ElseIf BubbleSortRadio.Checked Then
-                    Return BubbleComparisons(refArray)
-                End If
-            ElseIf ClockCyclesRadio.Checked = True Then
-                If SelectionSortRadio.Checked Then
-                    Return SSTicks(refArray)
-                ElseIf InsertionSortRadio.Checked Then
-                    Return InsertionTicks(refArray)
-                ElseIf QuickSortRadio.Checked Then
-                    If DisplayBox.Checked Then
-                        PrintUnsortedArray(refArray)
-                    End If
-                    startTick = Environment.TickCount
-                    QuickTicks(refArray, 0, UBound(refArray))
-                    endTick = Environment.TickCount
-                    If CheckSort(refArray) Then
-                        Return (endTick - startTick)
-                    Else
-                        Return 0
-                    End If
-                ElseIf MedianQuickRadio.Checked Then
-                    If DisplayBox.Checked Then
-                        PrintUnsortedArray(refArray)
-                    End If
-                    startTick = Environment.TickCount
-                    MedianQuickTicks(refArray, 0, UBound(refArray))
-                    endTick = Environment.TickCount
-                    If CheckSort(refArray) Then
-                        Return (endTick - startTick)
-                    Else
-                        Return 0
-                    End If
-                ElseIf BubbleSortRadio.Checked Then
-                    Return BubbleTicks(refArray)
-                ElseIf MergeSortRadio.Checked Then
-                    If DisplayBox.Checked Then
-                        PrintUnsortedArray(refArray)
-                    End If
-                    startTick = Environment.TickCount
-                    MergesortTicks(refArray)
-                    endTick = Environment.TickCount
-                    If DisplayBox.Checked Then
-                        PrintSortedArray(refArray)
-                    End If
-                    If CheckSort(refArray) Then
-                        Return (endTick - startTick)
-                    Else
-                        Return 0
-                    End If
-                ElseIf VBSortRadio.Checked Then
-                    startTick = Environment.TickCount
-                    Array.Sort(refArray)
-                    endTick = Environment.TickCount
-                    Return (endTick - startTick)
-                ElseIf BucketSortRadio.Checked Then
-                    Return BucketSort(refArray)
-                End If
+        Dim currentDir As String = My.Computer.FileSystem.CurrentDirectory
+        TextBox1.AppendText("Writing file to directory: " & currentDir)
+        Dim fileName As String = currentDir & "\Sorting_Results(" & arrayTypeName & ").csv"
+        If My.Computer.FileSystem.FileExists(fileName) Then
+            MsgBox(fileName & " already exists. Sending it to the recycle bin.")
+            My.Computer.FileSystem.DeleteFile(fileName, FileIO.UIOption.AllDialogs, FileIO.RecycleOption.SendToRecycleBin)
+        End If
+        'Now that all sorting is done store the averages in a file
+        For index = 0 To totalSorts
+            If SortList.CheckedIndices.Contains(index) Then
+                My.Computer.FileSystem.WriteAllText(fileName, sortDict.ElementAt(index).Key & "(Time),", True)
+                For arraySize = 0 To InputSize.Value
+                    My.Computer.FileSystem.WriteAllText(fileName, averages(index, time, arraySize).ToString & ",", True)
+                Next
+                My.Computer.FileSystem.WriteAllText(fileName, vbNewLine, True)
+                My.Computer.FileSystem.WriteAllText(fileName, sortDict.ElementAt(index).Key & "(Comps),", True)
+                For arraySize = 0 To InputSize.Value
+                    My.Computer.FileSystem.WriteAllText(fileName, averages(index, comps, arraySize).ToString & ",", True)
+                Next
+                My.Computer.FileSystem.WriteAllText(fileName, vbNewLine, True)
             End If
-
-            MsgBox("ERROR: A sorting alogrithm was not selected!")
-            Return 0
-    End Function
+        Next
+        TextBox1.AppendText(vbNewLine & "Done writing to results to file.")
+    End Sub
     'END MAIN FUNCTIONS
 
-   
+
     'CHANGE IF A SERIES IS ENABLED OR NOT
     Private Sub nVisBtn_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nVisBtn.CheckedChanged
         If nVisBtn.Checked = True Then
@@ -337,33 +261,4 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub MergeSortRadio_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles MergeSortRadio.CheckedChanged
-        If MergeSortRadio.Checked = True Then
-            ClockCyclesRadio.Checked = True
-            ComparisonsRadio.Enabled = False
-        Else
-            ComparisonsRadio.Enabled = True
-        End If
-    End Sub
-
-    Private Sub BucketSortRadio_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles BucketSortRadio.CheckedChanged
-        If BucketSortRadio.Checked = True Then
-            ClockCyclesRadio.Checked = True
-            ComparisonsRadio.Enabled = False
-        Else
-            ComparisonsRadio.Enabled = True
-        End If
-    End Sub
-
-    Private Sub VBSortRadio_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles VBSortRadio.CheckedChanged
-        If VBSortRadio.Checked = True Then
-            ClockCyclesRadio.Checked = True
-            ComparisonsRadio.Enabled = False
-        Else
-            ComparisonsRadio.Enabled = True
-        End If
-    End Sub
-
-
-    
 End Class

@@ -41,7 +41,8 @@
         Dim v As Int64
         Dim j As Integer 'Stores an index so it doesn't need to be Int64
         Dim StartTicks,
-            EndTicks As Long
+            EndTicks,
+            totalTime As Long
 
         'Create a newArray with sentinel
         ReDim Preserve newArray(0 To UBound(PassedArray) + 1)
@@ -59,17 +60,12 @@
             newArray(j + 1) = v
         Next
         EndTicks = Environment.TickCount
-
+        totalTime = EndTicks - StartTicks
         'Copy all but the sentinel of newArray() to tempArray()
-        Array.Copy(newArray, 1, tempArray, 0, UBound(newArray))
+        Array.Copy(newArray, 1, newArray, 0, UBound(newArray))
+        ReDim Preserve newArray(UBound(newArray) - 1)
 
-        'Check that newArray is sorted correctly
-        If CheckSort(tempArray) = True Then
-            Return (EndTicks - StartTicks)
-        Else
-            MsgBox("InsertionTicks ERROR: Array was NOT sorted properly")
-            Return 0
-        End If
+        Return verify(newArray, totalTime, "InsertionComparisons")
     End Function
 
     'Partition2 is used for both Quicksort and Median-of-3 sort
@@ -193,17 +189,17 @@
             Dim ArrayC(cEndIndex) As Int64 'If PassedArray were 99, cEndIndex would be 49, so ArrayC = [0-49]
 
             'copy a[0-48] to b[0-48]
-            For bIndex = 0 To bEndIndex
-                ArrayB(bIndex) = PassedArray(aIndex)
-                aIndex = aIndex + 1
-            Next
-
+            'For bIndex = 0 To bEndIndex
+            'ArrayB(bIndex) = PassedArray(aIndex)
+            'aIndex = aIndex + 1
+            'Next
+            Array.Copy(PassedArray, 0, ArrayB, 0, UBound(ArrayB))
             'copy a[49-99] to c[0-49]
-            For cIndex = 0 To cEndIndex
-                ArrayC(cIndex) = PassedArray(aIndex)
-                aIndex = aIndex + 1
-            Next
-
+            'For cIndex = 0 To cEndIndex
+            'ArrayC(cIndex) = PassedArray(aIndex)
+            'aIndex = aIndex + 1
+            'Next
+            Array.Copy(PassedArray, ArrayB.Length, ArrayC, 0, UBound(ArrayC))
             MergesortTicks(ArrayB)
             MergesortTicks(ArrayC)
             MergesortTicksMerge(PassedArray, ArrayB, ArrayC)

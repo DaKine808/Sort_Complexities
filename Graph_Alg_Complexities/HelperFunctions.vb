@@ -1,5 +1,22 @@
 ﻿Module HelperFunctions
 
+    Function calcAverage(ByRef passedArray(,,) As Int64, ByRef sortIndex As Integer, ByRef metric As Integer) As Double
+        Dim total As Int64 = 0
+        For run = 0 To UBound(passedArray, 3)
+            total = total + passedArray(sortIndex, metric, run)
+        Next
+        Return total / (UBound(passedArray, 3) + 1)
+    End Function
+
+    Function verify(ByRef sortedArray() As Int64, time As Long, sortName As String) As Long
+        If CheckSort(sortedArray) = True Then
+            Return time
+        Else
+            MsgBox(sortName & " ERROR: Array was NOT sorted properly")
+            Return 0
+        End If
+    End Function
+
     Function CheckSort(ByRef SortedArray() As Int64) As Boolean
         Dim a As Integer = UBound(SortedArray) - 1
 

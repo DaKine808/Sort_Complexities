@@ -1,77 +1,74 @@
 ﻿Module SortingFunctionsByCompare
 
     'SORTING ALGORITHMS COUNTING COMPARES
-    Function SSComparisons(ByRef PassedArray() As Int64)
-        Dim ArrayToSort() As Int64 = PassedArray
-        Dim lastIndex As Integer = UBound(ArrayToSort)
+    Function SSComparisons(ByVal passedArray() As Int64, ByRef comparisons As Integer) As Long
+        Dim lastIndex As Integer = UBound(passedArray)
         Dim min As Integer 'Stores an index
-        Dim comparisons As Integer = 0
         Dim swaps As Integer = 0
         Dim tempInt As Int64
+        Dim startTicks,
+            endTicks,
+            totalTime As Long
 
         'Sort ArrayToSort()
+        startTicks = Environment.TickCount
         For i = 0 To lastIndex - 1
             min = i
             For j = i + 1 To lastIndex
                 comparisons = comparisons + 1
-                If ArrayToSort(j) < ArrayToSort(min) Then
+                If passedArray(j) < passedArray(min) Then
                     min = j
                 End If
             Next
             If Not i = min Then
                 swaps = swaps + 1
-                tempInt = ArrayToSort(i)
-                ArrayToSort(i) = ArrayToSort(min)
-                ArrayToSort(min) = tempInt
+                tempInt = passedArray(i)
+                passedArray(i) = passedArray(min)
+                passedArray(min) = tempInt
             End If
         Next
+        endTicks = Environment.TickCount
+        totalTime = endTicks - startTicks
 
-        If CheckSort(ArrayToSort) = True Then
-            Return comparisons
-        Else
-            MsgBox("SSComparisons ERROR: Array was NOT sorted properly")
-            Return 0
-        End If
+        Return verify(passedArray, totalTime, "SSComparisons")
     End Function
 
-    Function InsertionComparisons(ByRef PassedArray() As Int64)
-        Dim newArray() As Int64 = {-9999}
-        Dim tempArray(UBound(PassedArray)) As Int64
+    Function InsertionComparisons(ByVal passedArray() As Int64, ByRef comparisons As Integer) As Long
+        'Create a newArray with sentinel
+        Dim newArray(UBound(passedArray) + 1) As Int64
+        newArray(0) = Int64.MinValue
+        passedArray.CopyTo(newArray, 1)
         Dim v As Int64
         Dim j As Integer 'Stores an index so it doesn't need to be Int64
-        Dim comparisons As Integer = 0
+        Dim startTicks,
+            endTicks,
+            totalTime As Long
 
-        'Create a newArray with sentinel
-        ReDim Preserve newArray(0 To UBound(PassedArray) + 1)
-        PassedArray.CopyTo(newArray, 1)
-
+        startTicks = Environment.TickCount
         'Sort newArray
         For i = 1 To UBound(newArray)
             v = newArray(i)
             j = i - 1
             comparisons = comparisons + 1
-            While Not (newArray(j) = -9999) And newArray(j) > v
+            While Not (newArray(j) = Int64.MinValue) And newArray(j) > v
                 comparisons = comparisons + 1
                 newArray(j + 1) = newArray(j)
                 j = j - 1
             End While
             newArray(j + 1) = v
         Next
+        endTicks = Environment.TickCount
+        totalTime = endTicks - startTicks
 
         'Copy all but the sentinel of newArray() to tempArray()
-        Array.Copy(newArray, 1, tempArray, 0, UBound(newArray))
+        Array.Copy(newArray, 1, newArray, 0, UBound(newArray))
+        ReDim Preserve newArray(UBound(newArray) - 1)
 
-        'Check that newArray is sorted correctly
-        If CheckSort(tempArray) = True Then
-            Return comparisons
-        Else
-            MsgBox("InsertionComparisons ERROR: Array was NOT sorted properly")
-            Return 0
-        End If
+        Return verify(newArray, totalTime, "InsertionComparisons")
     End Function
    
     'Partition1 is used for both Quicksort and Median-of-3 sort
-    Function Partition1(ByVal subArray() As Int64, ByRef leftIndex As Integer, ByRef rightIndex As Integer, ByRef counter As Integer)
+    Function Partition1(ByVal subArray() As Int64, ByRef leftIndex As Integer, ByRef rightIndex As Integer, ByRef comparisons As Integer)
         Dim p As Int64 = subArray(leftIndex)
         Dim i As Integer = leftIndex,
             j As Integer = rightIndex + 1,
@@ -80,12 +77,12 @@
         Do Until i >= j
             i = i + 1
             Do Until subArray(i) >= p Or i = rightIndex
-                counter = counter + 1
+                comparisons = comparisons + 1
                 i = i + 1
             Loop
             j = j - 1
             Do Until subArray(j) <= p
-                counter = counter + 1
+                comparisons = comparisons + 1
                 j = j - 1
             Loop
             tempValue = subArray(i)
@@ -104,32 +101,51 @@
         Return j
     End Function
 
-    Function QuickComparisons(ByVal PassedArray() As Int64, ByRef l As Integer, ByRef r As Integer) As Integer
-        Dim s As Integer = 0 'Stores an index so it doesn't need to be Int64
-        Dim counter As Integer = 0
-        If l < r Then
-            s = Partition1(PassedArray, l, r, counter)
-            counter = counter + QuickComparisons(PassedArray, l, s - 1)
-            counter = counter + QuickComparisons(PassedArray, s + 1, r)
-        End If
-        Return counter
+    Function QuickSortWrapper(ByVal passedArray() As Int64, ByRef comparisons As Integer) As Long
+        Dim startTicks,
+            endTicks,
+            totalTime As Long
+
+        startTicks = Environment.TickCount
+        QuickComparisons(passedArray, 0, UBound(passedArray), comparisons)
+        endTicks = Environment.TickCount
+        totalTime = endTicks - startTicks
+
+        Return verify(passedArray, totalTime, "QuickSort")
     End Function
 
-    Function MedianOfThreeComparisons(ByVal PassedArray() As Int64, ByRef leftIndex As Integer, ByRef rightIndex As Integer) As Integer
-        Dim midIndex As Integer = Math.Ceiling((leftIndex + rightIndex) / 2)
-        Dim x As Int64 = 0,
-            y As Int64 = 0,
-            z As Int64 = 0
-        Dim median As Integer = 0,
-            tempVal As Integer = 0,
-            counter As Integer = 0,
-            s As Integer = 0
-
+    Sub QuickComparisons(ByRef passedArray() As Int64, ByRef leftIndex As Integer, ByRef rightIndex As Integer, ByRef comparisons As Integer)
+        Dim s As Integer = 0 'Stores an index so it doesn't need to be Int64
         If leftIndex < rightIndex Then
+            s = Partition1(passedArray, leftIndex, rightIndex, comparisons)
+            QuickComparisons(passedArray, leftIndex, s - 1, comparisons)
+            QuickComparisons(passedArray, s + 1, rightIndex, comparisons)
+        End If
+    End Sub
+
+    Function MedianOfThreeWrapper(ByVal passedArray() As Int64, ByRef comparisons As Integer) As Long
+        Dim startTicks,
+            endTicks,
+            totalTime As Long
+
+        startTicks = Environment.TickCount
+        MedianOfThreeComparisons(passedArray, 0, UBound(passedArray), comparisons)
+        endTicks = Environment.TickCount
+        totalTime = endTicks - startTicks
+
+        Return verify(passedArray, totalTime, "Median-of-3")
+    End Function
+
+    Sub MedianOfThreeComparisons(ByRef passedArray() As Int64, ByRef leftIndex As Integer, ByRef rightIndex As Integer, ByRef comparisons As Integer)
+        If leftIndex < rightIndex Then
+            Dim midIndex As Integer = Math.Ceiling((leftIndex + rightIndex) / 2)
+            Dim x As Int64 = passedArray(leftIndex),
+                y As Int64 = passedArray(midIndex),
+                z As Int64 = passedArray(rightIndex)
+            Dim median As Integer = 0,
+                tempVal As Int64 = 0,
+                s As Integer = 0
             Dim tempArray(3) As Int64
-            x = PassedArray(leftIndex)
-            y = PassedArray(midIndex)
-            z = PassedArray(rightIndex)
 
             tempArray(0) = x
             tempArray(1) = y
@@ -143,89 +159,86 @@
                 median = rightIndex
             End If
 
-            tempVal = PassedArray(leftIndex)
-            PassedArray(leftIndex) = PassedArray(median)
-            PassedArray(median) = tempVal
+            tempVal = passedArray(leftIndex)
+            passedArray(leftIndex) = passedArray(median)
+            passedArray(median) = tempVal
 
-            s = Partition1(PassedArray, leftIndex, rightIndex, counter)
-            counter = counter + MedianOfThreeComparisons(PassedArray, leftIndex, s - 1)
-            counter = counter + MedianOfThreeComparisons(PassedArray, s + 1, rightIndex)
+            s = Partition1(passedArray, leftIndex, rightIndex, comparisons)
+            MedianOfThreeComparisons(passedArray, leftIndex, s - 1, comparisons)
+            MedianOfThreeComparisons(passedArray, s + 1, rightIndex, comparisons)
         End If
-        Return counter
-    End Function
+    End Sub
 
-    Function BubbleComparisons(ByRef PassedArray() As Int64) As Integer
-        Dim ArrayToSort() As Int64 = PassedArray
+    Function BubbleComparisons(ByVal passedArray() As Int64, ByRef comparisons As Integer) As Long
         Dim swaps As Integer = 1
-        Dim comparisons As Integer = 0
-        Dim lastElement As Integer = UBound(PassedArray)
+        Dim lastElement As Integer = UBound(passedArray)
         Dim temp As Int64
+        Dim startTicks,
+            endTicks,
+            totalTime As Long
+
+        startTicks = Environment.TickCount
         While (swaps > 0)
             swaps = 0
             For i = 0 To lastElement - 1
                 comparisons = comparisons + 1
-                If ArrayToSort(i) > ArrayToSort(i + 1) Then
-                    'comparisons = comparisons + 1
-                    temp = ArrayToSort(i + 1)
-                    ArrayToSort(i + 1) = ArrayToSort(i)
-                    ArrayToSort(i) = temp
+                If passedArray(i) > passedArray(i + 1) Then
+                    temp = passedArray(i + 1)
+                    passedArray(i + 1) = passedArray(i)
+                    passedArray(i) = temp
                     swaps += 1
                 End If
             Next
         End While
-        If CheckSort(ArrayToSort) = True Then
-            Return comparisons
-        Else
-            MsgBox("BubbleComparisons ERROR: Array was NOT sorted properly")
-            Return 0
-        End If
+        endTicks = Environment.TickCount
+        totalTime = endTicks - startTicks
+
+        Return verify(passedArray, totalTime, "BubbleComparisons")
     End Function
 
-    Function MergesortComps(ByRef PassedArray() As Int64) As Integer
-        Dim aIndex As Integer = 0,
-            bIndex As Integer = 0,
-            cIndex As Integer = 0,
-            counter As Integer = 0
+    Function MergeSortWrapper(ByVal passedArray() As Int64, ByRef comparisons As Integer) As Long
+        Dim startTick,
+            endTick,
+            totalTime As Long
 
-        If PassedArray.Length > 1 Then
-            Dim bEndIndex As Integer = Math.Floor(PassedArray.Length / 2) - 1,
-                cEndIndex As Integer = Math.Ceiling(PassedArray.Length / 2) - 1
-            Dim ArrayB(bEndIndex) As Int64 'If PassedArray were 99, bEndIndex would be 48, so ArrayB = [0-48]
-            Dim ArrayC(cEndIndex) As Int64 'If PassedArray were 99, cEndIndex would be 49, so ArrayC = [0-49]
+        startTick = Environment.TickCount
+        MergesortComps(passedArray, comparisons)
+        endTick = Environment.TickCount
+        totalTime = endTick - startTick
+
+        Return verify(passedArray, totalTime, "MergeSort")
+    End Function
+
+    Sub MergesortComps(ByRef passedArray() As Int64, ByRef comparisons As Integer)
+        If passedArray.Length > 1 Then
+            Dim bEndIndex As Integer = Math.Floor(passedArray.Length / 2) - 1,
+                cEndIndex As Integer = bEndIndex + 2
+            Dim ArrayB(bEndIndex) As Int64 'If PassedArray.length were 99 (0-98), bEndIndex would be 48, so ArrayB is (0-48)
+            Dim ArrayC(cEndIndex) As Int64 'If PassedArray.length were 99 (0-98), cEndIndex would be 49, so ArrayC is (0-49)
 
             'copy a[0-48] to b[0-48]
-            For bIndex = 0 To bEndIndex
-                ArrayB(bIndex) = PassedArray(aIndex)
-                aIndex = aIndex + 1
-            Next
+            Array.Copy(passedArray, 0, ArrayB, 0, UBound(ArrayB))
 
             'copy a[49-99] to c[0-49]
-            For cIndex = 0 To cEndIndex
-                ArrayC(cIndex) = PassedArray(aIndex)
-                aIndex = aIndex + 1
-            Next
+            Array.Copy(passedArray, ArrayB.Length, ArrayC, 0, UBound(ArrayC))
 
-            counter = counter + MergesortComps(ArrayB)
-            counter = counter + MergesortComps(ArrayC)
-            counter = counter + MergesortCompsMerge(PassedArray, ArrayB, ArrayC)
-
-            'Else
-            'Return counter
+            MergesortComps(ArrayB, comparisons)
+            MergesortComps(ArrayC, comparisons)
+            MergesortCompsMerge(passedArray, ArrayB, ArrayC, comparisons)
         End If
-        Return counter
-    End Function
+    End Sub
 
-    Function MergesortCompsMerge(ByRef ArrayA() As Int64, ByRef ArrayB() As Int64, ByRef ArrayC() As Int64) As Integer
+    Sub MergesortCompsMerge(ByRef ArrayA() As Int64, ByRef ArrayB() As Int64, ByRef ArrayC() As Int64, ByRef comparisons As Integer)
         Dim aIndex As Integer = 0,
             bIndex As Integer = 0,
-            cIndex As Integer = 0,
-            counter As Integer = 0
+            cIndex As Integer = 0
+
         Dim aEnd = ArrayA.Length,
             bEnd = ArrayB.Length,
             cEnd = ArrayC.Length
 
         While bIndex < bEnd And cIndex < cEnd
-            counter = counter + 1
+            comparisons = comparisons + 1
             If ArrayB(bIndex) <= ArrayC(cIndex) Then
                 ArrayA(aIndex) = ArrayB(bIndex)
                 bIndex = bIndex + 1
@@ -252,9 +265,67 @@
                 aIndex = aIndex + 1
             End While
         End If
-        Return counter
-    End Function
+    End Sub
 
     'BucketSort
+    Function BucketSortComp(ByVal passedArray() As Int64, ByRef comparisons As Integer) As Long
+        Dim buckets(9) As List(Of Int64)
 
+        Dim tempIndex As Integer,
+            arrayIndex As Integer,
+            bucketIndex As Integer
+
+        Dim maxLen As Integer = maxIntLen(passedArray)
+        Dim exp As Integer
+        Dim digit As Int64 = 1
+        Dim temp As Int64 = 0
+        Dim valAtIndex As Int64 = 0
+        Dim startTick,
+            endTick,
+            totalTime As Long
+
+        buckets.Initialize()
+        For i As Integer = 0 To 9
+            buckets(i) = New List(Of Int64)
+        Next
+
+        startTick = Environment.TickCount
+
+        For exp = 0 To maxLen
+            'Put numbers into respective buckets
+            For arrayIndex = 0 To UBound(passedArray)
+                valAtIndex = passedArray(arrayIndex)
+                temp = Int(valAtIndex / digit) Mod 10
+                buckets(temp).Add(valAtIndex)
+            Next
+            arrayIndex = 0
+            'Put bucket contents back into array
+            For bucketIndex = 0 To UBound(buckets)
+                tempIndex = buckets(bucketIndex).Count
+                buckets(bucketIndex).ToArray.CopyTo(passedArray, arrayIndex)
+                arrayIndex = arrayIndex + tempIndex
+                tempIndex = 0
+                buckets(bucketIndex).RemoveRange(0, buckets(bucketIndex).Count)
+            Next
+            digit = digit * 10
+        Next
+
+        endTick = Environment.TickCount
+        totalTime = endTick - startTick
+
+        Return verify(passedArray, totalTime, "BucketSortTicks")
+    End Function
+
+    Function VBSortComps(ByVal passedArray() As Int64, ByRef comparisons As Integer) As Long
+        Dim startTick,
+            endTick,
+            totalTime As Long
+
+        startTick = Environment.TickCount
+        Array.Sort(passedArray)
+        endTick = Environment.TickCount
+        totalTime = endTick - startTick
+
+        Return verify(passedArray, totalTime, "VBSort")
+    End Function
 End Module
