@@ -267,7 +267,6 @@
         End If
     End Sub
 
-    'BucketSort
     Function BucketSortComp(ByVal passedArray() As Int64, ByRef comparisons As Integer) As Long
         Dim buckets(9) As List(Of Int64)
 

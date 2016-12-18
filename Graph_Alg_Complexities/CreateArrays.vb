@@ -10,7 +10,7 @@
         Return RandomArray
     End Function
 
-    Function CreateIncreasingArray2(ByVal i As Integer)
+    Function CreateIncreasingArray(ByVal i As Integer)
         Dim IncreasingArray(i) As Int64
         Dim multiplier As Integer = rand.Next(999)
         For j = 0 To i

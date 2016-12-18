@@ -1,6 +1,15 @@
 ﻿Imports System.Windows.Forms.DataVisualization.Charting
 
 Public Class Form1
+    Delegate Function mySort(ByVal passedArray() As Int64, ByRef comparisons As Integer) As Long
+
+    Dim numberOfSeries As Integer = 1
+
+    'Because counting clock cycles causes weird results below a certain threshold,
+    'when counting them I adjust how many runs of each array size there will be 
+    '(Currently affects counting comparisons as well). From trial and error 10 seems 
+    'to be a good modifier.
+    Dim timeMultiplier As Integer = 10
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -25,16 +34,7 @@ Public Class Form1
         Chart1.Series(3).Enabled = False
     End Sub
 
-    Delegate Function mySort(ByVal passedArray() As Int64, ByRef comparisons As Integer) As Long
-
-    Dim numberOfSeries As Integer = 1
-
-    'Because counting clock cycles causes weird results, when counting them I
-    'adjust how many runs of each array size there will be. From trial and 
-    'error 10 seems to be a good modifier.
-    Dim timeMultiplier As Integer = 10
-
-    'MAIN FUNCTIONS
+    'MAIN FUNCTION
     Private Sub BeginSorting_Click(sender As System.Object, e As System.EventArgs) Handles BeginSorting.Click
         Dim numberOfSorts As Integer = SortList.SelectedItems.Count()
         Dim totalSorts As Integer = SortList.Items.Count()
@@ -62,29 +62,15 @@ Public Class Form1
         Dim tempArray() As Int64
         'averages will store the average results of all 8 sorts for both time(0) and comparisons(1)
         'once done, averages will be written to a file
-        Dim averages(7, 1, InputSize.Value) As Double
+        Dim averages(totalSorts - 1, 1, InputSize.Value) As Double
         averages.Initialize()
         'results will temporarily hold the results of all 8 sorts for both time(0) and comparisons(1) before
         'they are averaged and stored in the averages array
-        Dim results(7, 1, NumOfRuns.Value * timeMultiplier) As Int64
+        Dim results(totalSorts - 1, 1, NumOfRuns.Value * timeMultiplier) As Int64
         results.Initialize()
         Dim comparisons As Integer = 0
         Dim arrayType As Func(Of Integer, Array)
         Dim arrayTypeName As String
-
-        If IncArrayRadio.Checked = True Then
-            arrayTypeName = "Increasing_Array"
-            arrayType = AddressOf CreateIncreasingArray2
-        ElseIf DecArrayRadio.Checked = True Then
-            arrayTypeName = "Decreasing_Array"
-            arrayType = AddressOf CreateDecreasingArray
-        ElseIf NearlySortedRadio.Checked = True Then
-            arrayTypeName = "Nearly_Sorted_Array"
-            arrayType = AddressOf CreateNearlySortedArray
-        Else
-            arrayTypeName = "Random_Array"
-            arrayType = AddressOf CreateRandomArray
-        End If
 
         For arraySize = 2 To InputSize.Value
             results.Initialize()
@@ -92,24 +78,21 @@ Public Class Form1
                 'Generate the array to be used by all of the selected sorts
                 tempArray = arrayType(arraySize)
                 'Run the "unsorted" array through all of the selected sorts
-                For sortIndex = 0 To numberOfSorts
-                    If SortList.CheckedIndices.Contains(sortIndex) Then
-                        comparisons = 0
-                        results(sortIndex, time, run) = sortDict.ElementAt(sortIndex).Value(tempArray, comparisons)
-                        results(sortIndex, comps, run) = comparisons
-                    End If
+                For Each sortIndex As Integer In SortList.SelectedIndices
+                    comparisons = 0
+                    results(sortIndex, time, run) = sortDict.ElementAt(sortIndex).Value(tempArray, comparisons)
+                    results(sortIndex, comps, run) = comparisons
                 Next
             Next
             'Now that all of the runs for an arraysize are done
             'calculate the averages and store them in the averages array
-            For index = 0 To totalSorts
-                If SortList.CheckedIndices.Contains(index) Then
-                    averages(index, time, arraySize) = calcAverage(results, index, time)
-                    averages(index, comps, arraySize) = calcAverage(results, index, comps)
-                End If
+            For Each index As Integer In SortList.SelectedIndices
+                averages(index, time, arraySize) = calcAverage(results, index, time)
+                averages(index, comps, arraySize) = calcAverage(results, index, comps)
             Next
         Next
 
+        'Make sure the file I'm trying to write to doesn't already exist.
         Dim currentDir As String = My.Computer.FileSystem.CurrentDirectory
         TextBox1.AppendText("Writing file to directory: " & currentDir)
         Dim fileName As String = currentDir & "\Sorting_Results(" & arrayTypeName & ").csv"
@@ -117,6 +100,7 @@ Public Class Form1
             MsgBox(fileName & " already exists. Sending it to the recycle bin.")
             My.Computer.FileSystem.DeleteFile(fileName, FileIO.UIOption.AllDialogs, FileIO.RecycleOption.SendToRecycleBin)
         End If
+
         'Now that all sorting is done store the averages in a file
         For index = 0 To totalSorts
             If SortList.CheckedIndices.Contains(index) Then
@@ -134,7 +118,23 @@ Public Class Form1
         Next
         TextBox1.AppendText(vbNewLine & "Done writing to results to file.")
     End Sub
-    'END MAIN FUNCTIONS
+    'END MAIN FUNCTION
+
+    Private Sub getArrayType(ByRef arrayType As Func(Of Integer, Array), ByRef arrayTypeName As String)
+        If IncArrayRadio.Checked = True Then
+            arrayTypeName = "Increasing_Array"
+            arrayType = AddressOf CreateIncreasingArray
+        ElseIf DecArrayRadio.Checked = True Then
+            arrayTypeName = "Decreasing_Array"
+            arrayType = AddressOf CreateDecreasingArray
+        ElseIf NearlySortedRadio.Checked = True Then
+            arrayTypeName = "Nearly_Sorted_Array"
+            arrayType = AddressOf CreateNearlySortedArray
+        Else
+            arrayTypeName = "Random_Array"
+            arrayType = AddressOf CreateRandomArray
+        End If
+    End Sub
 
 
     'CHANGE IF A SERIES IS ENABLED OR NOT
