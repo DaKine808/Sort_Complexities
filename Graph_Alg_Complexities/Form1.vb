@@ -56,6 +56,7 @@ Public Class Form1
             }
 
         TextBox1.Clear()
+        SortProgress.Value = 2
         Dim time As Integer = 0,
             comps As Integer = 1
         'tempArray is used to store the "unsorted" array that is used by all the sort functions selected
@@ -71,6 +72,9 @@ Public Class Form1
         Dim comparisons As Integer = 0
         Dim arrayType As Func(Of Integer, Array)
         Dim arrayTypeName As String
+        getArrayType(arrayType, arrayTypeName)
+
+        SortProgress.Maximum = InputSize.Value
 
         For arraySize = 2 To InputSize.Value
             results.Initialize()
@@ -90,6 +94,7 @@ Public Class Form1
                 averages(index, time, arraySize) = calcAverage(results, index, time)
                 averages(index, comps, arraySize) = calcAverage(results, index, comps)
             Next
+            SortProgress.PerformStep()
         Next
 
         'Make sure the file I'm trying to write to doesn't already exist.
