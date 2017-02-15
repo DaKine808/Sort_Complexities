@@ -2,10 +2,13 @@
 
     Function calcAverage(ByRef passedArray(,,) As Int64, ByRef sortIndex As Integer, ByRef metric As Integer) As Double
         Dim total As Int64 = 0
-        For run = 0 To UBound(passedArray, 3)
+        Dim endVal As Int64 = UBound(passedArray, 3)
+        'Dim arrayCopy(endVal) As Int64
+        'copy the one dimension into another array and use the built-in sum function
+        For run = 0 To endVal
             total = total + passedArray(sortIndex, metric, run)
         Next
-        Return total / (UBound(passedArray, 3) + 1)
+        Return total / (endVal + 1)
     End Function
 
     Function verify(ByRef sortedArray() As Int64, time As Long, sortName As String) As Long

@@ -10,27 +10,31 @@
             endTicks,
             totalTime As Long
 
+        Dim arrayCopy(UBound(passedArray)) As Int64
+
+        passedArray.CopyTo(arrayCopy, 0)
+
         'Sort ArrayToSort()
         startTicks = Environment.TickCount
         For i = 0 To lastIndex - 1
             min = i
             For j = i + 1 To lastIndex
                 comparisons = comparisons + 1
-                If passedArray(j) < passedArray(min) Then
+                If arrayCopy(j) < arrayCopy(min) Then
                     min = j
                 End If
             Next
             If Not i = min Then
                 swaps = swaps + 1
-                tempInt = passedArray(i)
-                passedArray(i) = passedArray(min)
-                passedArray(min) = tempInt
+                tempInt = arrayCopy(i)
+                arrayCopy(i) = arrayCopy(min)
+                arrayCopy(min) = tempInt
             End If
         Next
         endTicks = Environment.TickCount
         totalTime = endTicks - startTicks
 
-        Return verify(passedArray, totalTime, "SSComparisons")
+        Return verify(arrayCopy, totalTime, "SSComparisons")
     End Function
 
     Function InsertionComparisons(ByVal passedArray() As Int64, ByRef comparisons As Integer) As Long
@@ -105,13 +109,16 @@
         Dim startTicks,
             endTicks,
             totalTime As Long
+        Dim arrayCopy(UBound(passedArray)) As Int64
+
+        passedArray.CopyTo(arrayCopy, 0)
 
         startTicks = Environment.TickCount
-        QuickComparisons(passedArray, 0, UBound(passedArray), comparisons)
+        QuickComparisons(arrayCopy, 0, UBound(arrayCopy), comparisons)
         endTicks = Environment.TickCount
         totalTime = endTicks - startTicks
 
-        Return verify(passedArray, totalTime, "QuickSort")
+        Return verify(arrayCopy, totalTime, "QuickSort")
     End Function
 
     Sub QuickComparisons(ByRef passedArray() As Int64, ByRef leftIndex As Integer, ByRef rightIndex As Integer, ByRef comparisons As Integer)
@@ -128,12 +135,16 @@
             endTicks,
             totalTime As Long
 
+        Dim arrayCopy(UBound(passedArray)) As Int64
+
+        passedArray.CopyTo(arrayCopy, 0)
+
         startTicks = Environment.TickCount
-        MedianOfThreeComparisons(passedArray, 0, UBound(passedArray), comparisons)
+        MedianOfThreeComparisons(arrayCopy, 0, UBound(arrayCopy), comparisons)
         endTicks = Environment.TickCount
         totalTime = endTicks - startTicks
 
-        Return verify(passedArray, totalTime, "Median-of-3")
+        Return verify(arrayCopy, totalTime, "Median-of-3")
     End Function
 
     Sub MedianOfThreeComparisons(ByRef passedArray() As Int64, ByRef leftIndex As Integer, ByRef rightIndex As Integer, ByRef comparisons As Integer)
@@ -177,15 +188,19 @@
             endTicks,
             totalTime As Long
 
+        Dim arrayCopy(UBound(passedArray)) As Int64
+
+        passedArray.CopyTo(arrayCopy, 0)
+
         startTicks = Environment.TickCount
         While (swaps > 0)
             swaps = 0
             For i = 0 To lastElement - 1
                 comparisons = comparisons + 1
-                If passedArray(i) > passedArray(i + 1) Then
-                    temp = passedArray(i + 1)
-                    passedArray(i + 1) = passedArray(i)
-                    passedArray(i) = temp
+                If arrayCopy(i) > arrayCopy(i + 1) Then
+                    temp = arrayCopy(i + 1)
+                    arrayCopy(i + 1) = arrayCopy(i)
+                    arrayCopy(i) = temp
                     swaps += 1
                 End If
             Next
@@ -193,7 +208,7 @@
         endTicks = Environment.TickCount
         totalTime = endTicks - startTicks
 
-        Return verify(passedArray, totalTime, "BubbleComparisons")
+        Return verify(arrayCopy, totalTime, "BubbleComparisons")
     End Function
 
     Function MergeSortWrapper(ByVal passedArray() As Int64, ByRef comparisons As Integer) As Long
@@ -201,18 +216,30 @@
             endTick,
             totalTime As Long
 
+        Dim arrayCopy(UBound(passedArray)) As Int64
+
+        passedArray.CopyTo(arrayCopy, 0)
+
         startTick = Environment.TickCount
-        MergesortComps(passedArray, comparisons)
+        MergesortComps(arrayCopy, comparisons)
         endTick = Environment.TickCount
         totalTime = endTick - startTick
 
-        Return verify(passedArray, totalTime, "MergeSort")
+        Return verify(arrayCopy, totalTime, "MergeSort")
     End Function
 
     Sub MergesortComps(ByRef passedArray() As Int64, ByRef comparisons As Integer)
         If passedArray.Length > 1 Then
-            Dim bEndIndex As Integer = Math.Floor(passedArray.Length / 2) - 1,
-                cEndIndex As Integer = bEndIndex + 2
+            Dim bEndIndex As Integer = (passedArray.Length \ 2) - 1,
+                cEndIndex As Integer
+
+            'if the length is even
+            If passedArray.Length Mod 2 = 0 Then
+                cEndIndex = bEndIndex
+            Else
+                cEndIndex = bEndIndex + 1
+            End If
+
             Dim ArrayB(bEndIndex) As Int64 'If PassedArray.length were 99 (0-98), bEndIndex would be 48, so ArrayB is (0-48)
             Dim ArrayC(cEndIndex) As Int64 'If PassedArray.length were 99 (0-98), cEndIndex would be 49, so ArrayC is (0-49)
 
@@ -267,6 +294,7 @@
         End If
     End Sub
 
+    'Bucketsort only works with positive numbers at the moment
     Function BucketSortComp(ByVal passedArray() As Int64, ByRef comparisons As Integer) As Long
         Dim buckets(9) As List(Of Int64)
 
@@ -283,6 +311,10 @@
             endTick,
             totalTime As Long
 
+        Dim arrayCopy(UBound(passedArray)) As Int64
+
+        passedArray.CopyTo(arrayCopy, 0)
+
         buckets.Initialize()
         For i As Integer = 0 To 9
             buckets(i) = New List(Of Int64)
@@ -292,16 +324,16 @@
 
         For exp = 0 To maxLen
             'Put numbers into respective buckets
-            For arrayIndex = 0 To UBound(passedArray)
-                valAtIndex = passedArray(arrayIndex)
-                temp = Int(valAtIndex / digit) Mod 10
+            For arrayIndex = 0 To UBound(arrayCopy)
+                valAtIndex = arrayCopy(arrayIndex)
+                temp = (valAtIndex \ digit) Mod 10
                 buckets(temp).Add(valAtIndex)
             Next
             arrayIndex = 0
             'Put bucket contents back into array
             For bucketIndex = 0 To UBound(buckets)
                 tempIndex = buckets(bucketIndex).Count
-                buckets(bucketIndex).ToArray.CopyTo(passedArray, arrayIndex)
+                buckets(bucketIndex).ToArray.CopyTo(arrayCopy, arrayIndex)
                 arrayIndex = arrayIndex + tempIndex
                 tempIndex = 0
                 buckets(bucketIndex).RemoveRange(0, buckets(bucketIndex).Count)
@@ -312,7 +344,7 @@
         endTick = Environment.TickCount
         totalTime = endTick - startTick
 
-        Return verify(passedArray, totalTime, "BucketSortTicks")
+        Return verify(arrayCopy, totalTime, "BucketSortTicks")
     End Function
 
     Function VBSortComps(ByVal passedArray() As Int64, ByRef comparisons As Integer) As Long
@@ -320,11 +352,15 @@
             endTick,
             totalTime As Long
 
+        Dim arrayCopy(UBound(passedArray)) As Int64
+
+        passedArray.CopyTo(arrayCopy, 0)
+
         startTick = Environment.TickCount
-        Array.Sort(passedArray)
+        Array.Sort(arrayCopy)
         endTick = Environment.TickCount
         totalTime = endTick - startTick
 
-        Return verify(passedArray, totalTime, "VBSort")
+        Return verify(arrayCopy, totalTime, "VBSort")
     End Function
 End Module

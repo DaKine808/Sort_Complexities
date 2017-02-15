@@ -22,14 +22,13 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ChartArea6 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend6 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series21 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series22 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series23 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series24 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.Chart1 = New System.Windows.Forms.DataVisualization.Charting.Chart()
-        Me.RandSerBtn = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.NumOfRuns = New System.Windows.Forms.NumericUpDown()
         Me.ArrayPanel = New System.Windows.Forms.Panel()
@@ -40,8 +39,9 @@ Partial Class Form1
         Me.Label2 = New System.Windows.Forms.Label()
         Me.InputSize = New System.Windows.Forms.NumericUpDown()
         Me.MetricPanel = New System.Windows.Forms.Panel()
-        Me.ComparisonsRadio = New System.Windows.Forms.RadioButton()
-        Me.ClockCyclesRadio = New System.Windows.Forms.RadioButton()
+        Me.ClockRadio = New System.Windows.Forms.RadioButton()
+        Me.CompsRadio = New System.Windows.Forms.RadioButton()
+        Me.DispResBox = New System.Windows.Forms.CheckBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.NsqrVisBtn = New System.Windows.Forms.CheckBox()
         Me.nVisBtn = New System.Windows.Forms.CheckBox()
@@ -66,46 +66,37 @@ Partial Class Form1
         '
         'Chart1
         '
-        ChartArea6.AxisX.MajorGrid.IntervalOffset = 0.0R
-        ChartArea6.AxisX.Minimum = 0.0R
-        ChartArea6.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea6)
-        Legend6.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend6)
+        ChartArea1.AxisX.MajorGrid.IntervalOffset = 0.0R
+        ChartArea1.AxisX.Minimum = 0.0R
+        ChartArea1.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea1)
+        Legend1.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend1)
         Me.Chart1.Location = New System.Drawing.Point(12, 12)
         Me.Chart1.Name = "Chart1"
-        Series21.ChartArea = "ChartArea1"
-        Series21.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series21.Legend = "Legend1"
-        Series21.Name = "Series1"
-        Series22.ChartArea = "ChartArea1"
-        Series22.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series22.Legend = "Legend1"
-        Series22.Name = "Series2"
-        Series23.ChartArea = "ChartArea1"
-        Series23.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series23.Legend = "Legend1"
-        Series23.Name = "Series3"
-        Series24.ChartArea = "ChartArea1"
-        Series24.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series24.Legend = "Legend1"
-        Series24.Name = "Series4"
-        Me.Chart1.Series.Add(Series21)
-        Me.Chart1.Series.Add(Series22)
-        Me.Chart1.Series.Add(Series23)
-        Me.Chart1.Series.Add(Series24)
+        Series1.ChartArea = "ChartArea1"
+        Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series1.Legend = "Legend1"
+        Series1.Name = "Series1"
+        Series2.ChartArea = "ChartArea1"
+        Series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series2.Legend = "Legend1"
+        Series2.Name = "Series2"
+        Series3.ChartArea = "ChartArea1"
+        Series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series3.Legend = "Legend1"
+        Series3.Name = "Series3"
+        Series4.ChartArea = "ChartArea1"
+        Series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series4.Legend = "Legend1"
+        Series4.Name = "Series4"
+        Me.Chart1.Series.Add(Series1)
+        Me.Chart1.Series.Add(Series2)
+        Me.Chart1.Series.Add(Series3)
+        Me.Chart1.Series.Add(Series4)
         Me.Chart1.Size = New System.Drawing.Size(783, 557)
         Me.Chart1.TabIndex = 0
         Me.Chart1.Text = "Chart1"
-        '
-        'RandSerBtn
-        '
-        Me.RandSerBtn.Location = New System.Drawing.Point(983, 391)
-        Me.RandSerBtn.Name = "RandSerBtn"
-        Me.RandSerBtn.Size = New System.Drawing.Size(95, 23)
-        Me.RandSerBtn.TabIndex = 25
-        Me.RandSerBtn.Text = "Add Rand Series"
-        Me.RandSerBtn.UseVisualStyleBackColor = True
         '
         'Label1
         '
@@ -204,35 +195,46 @@ Partial Class Form1
         'MetricPanel
         '
         Me.MetricPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.MetricPanel.Controls.Add(Me.ComparisonsRadio)
-        Me.MetricPanel.Controls.Add(Me.ClockCyclesRadio)
-        Me.MetricPanel.Location = New System.Drawing.Point(825, 303)
+        Me.MetricPanel.Controls.Add(Me.ClockRadio)
+        Me.MetricPanel.Controls.Add(Me.CompsRadio)
+        Me.MetricPanel.Controls.Add(Me.DispResBox)
+        Me.MetricPanel.Location = New System.Drawing.Point(825, 285)
         Me.MetricPanel.Name = "MetricPanel"
-        Me.MetricPanel.Size = New System.Drawing.Size(125, 53)
+        Me.MetricPanel.Size = New System.Drawing.Size(125, 81)
         Me.MetricPanel.TabIndex = 101
         Me.MetricPanel.TabStop = True
         '
-        'ComparisonsRadio
+        'ClockRadio
         '
-        Me.ComparisonsRadio.AutoSize = True
-        Me.ComparisonsRadio.Checked = True
-        Me.ComparisonsRadio.Location = New System.Drawing.Point(14, 3)
-        Me.ComparisonsRadio.Name = "ComparisonsRadio"
-        Me.ComparisonsRadio.Size = New System.Drawing.Size(85, 17)
-        Me.ComparisonsRadio.TabIndex = 10
-        Me.ComparisonsRadio.TabStop = True
-        Me.ComparisonsRadio.Text = "Comparisons"
-        Me.ComparisonsRadio.UseVisualStyleBackColor = True
+        Me.ClockRadio.AutoSize = True
+        Me.ClockRadio.Enabled = False
+        Me.ClockRadio.Location = New System.Drawing.Point(14, 52)
+        Me.ClockRadio.Name = "ClockRadio"
+        Me.ClockRadio.Size = New System.Drawing.Size(86, 17)
+        Me.ClockRadio.TabIndex = 2
+        Me.ClockRadio.Text = "Clock Cycles"
+        Me.ClockRadio.UseVisualStyleBackColor = True
         '
-        'ClockCyclesRadio
+        'CompsRadio
         '
-        Me.ClockCyclesRadio.AutoSize = True
-        Me.ClockCyclesRadio.Location = New System.Drawing.Point(14, 26)
-        Me.ClockCyclesRadio.Name = "ClockCyclesRadio"
-        Me.ClockCyclesRadio.Size = New System.Drawing.Size(86, 17)
-        Me.ClockCyclesRadio.TabIndex = 11
-        Me.ClockCyclesRadio.Text = "Clock Cycles"
-        Me.ClockCyclesRadio.UseVisualStyleBackColor = True
+        Me.CompsRadio.AutoSize = True
+        Me.CompsRadio.Enabled = False
+        Me.CompsRadio.Location = New System.Drawing.Point(14, 28)
+        Me.CompsRadio.Name = "CompsRadio"
+        Me.CompsRadio.Size = New System.Drawing.Size(85, 17)
+        Me.CompsRadio.TabIndex = 1
+        Me.CompsRadio.Text = "Comparisons"
+        Me.CompsRadio.UseVisualStyleBackColor = True
+        '
+        'DispResBox
+        '
+        Me.DispResBox.AutoSize = True
+        Me.DispResBox.Location = New System.Drawing.Point(14, 4)
+        Me.DispResBox.Name = "DispResBox"
+        Me.DispResBox.Size = New System.Drawing.Size(98, 17)
+        Me.DispResBox.TabIndex = 0
+        Me.DispResBox.Text = "Display Results"
+        Me.DispResBox.UseVisualStyleBackColor = True
         '
         'TextBox1
         '
@@ -395,7 +397,6 @@ Partial Class Form1
         Me.Controls.Add(Me.ArrayPanel)
         Me.Controls.Add(Me.NumOfRuns)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.RandSerBtn)
         Me.Controls.Add(Me.Chart1)
         Me.Name = "Form1"
         Me.Text = "VBgraphing"
@@ -412,7 +413,6 @@ Partial Class Form1
 
     End Sub
     Friend WithEvents Chart1 As System.Windows.Forms.DataVisualization.Charting.Chart
-    Friend WithEvents RandSerBtn As System.Windows.Forms.Button
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents NumOfRuns As System.Windows.Forms.NumericUpDown
     Friend WithEvents ArrayPanel As System.Windows.Forms.Panel
@@ -423,8 +423,6 @@ Partial Class Form1
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents InputSize As System.Windows.Forms.NumericUpDown
     Friend WithEvents MetricPanel As System.Windows.Forms.Panel
-    Friend WithEvents ComparisonsRadio As System.Windows.Forms.RadioButton
-    Friend WithEvents ClockCyclesRadio As System.Windows.Forms.RadioButton
     Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
     Friend WithEvents NsqrVisBtn As System.Windows.Forms.CheckBox
     Friend WithEvents nVisBtn As System.Windows.Forms.CheckBox
@@ -439,5 +437,8 @@ Partial Class Form1
     Friend WithEvents BeginSorting As System.Windows.Forms.Button
     Friend WithEvents SortList As System.Windows.Forms.CheckedListBox
     Friend WithEvents DisplayBox As System.Windows.Forms.CheckBox
+    Friend WithEvents ClockRadio As System.Windows.Forms.RadioButton
+    Friend WithEvents CompsRadio As System.Windows.Forms.RadioButton
+    Friend WithEvents DispResBox As System.Windows.Forms.CheckBox
 
 End Class

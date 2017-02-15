@@ -5,7 +5,8 @@
     Function CreateRandomArray(ByVal i As Integer) As Array
         Dim RandomArray(i) As Int64
         For j = 0 To i
-            RandomArray(j) = rand.Next(Int32.MinValue, Int32.MaxValue)
+            'lower bound of rand.Next is 0 because bucket sort doesn't work with negatives
+            RandomArray(j) = rand.Next(0, Int32.MaxValue)
         Next
         Return RandomArray
     End Function

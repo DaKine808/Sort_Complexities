@@ -3,13 +3,24 @@
 Public Class Form1
     Delegate Function mySort(ByVal passedArray() As Int64, ByRef comparisons As Integer) As Long
 
-    Dim numberOfSeries As Integer = 1
+    Dim sortDict As New Dictionary(Of String, mySort) From
+            {{"Selection Sort", AddressOf SSComparisons},
+             {"Quick Sort", AddressOf QuickSortWrapper},
+             {"Median Of 3", AddressOf MedianOfThreeWrapper},
+             {"Insertion Sort", AddressOf InsertionComparisons},
+             {"Bubble Sort", AddressOf BubbleComparisons},
+             {"Merge Sort", AddressOf MergeSortWrapper},
+             {"Bucket Sort", AddressOf BucketSortComp},
+             {"VisualBasic Sort", AddressOf VBSortComps}
+            }
+
+    Dim numberOfSeries As Integer = 10
 
     'Because counting clock cycles causes weird results below a certain threshold,
     'when counting them I adjust how many runs of each array size there will be 
     '(Currently affects counting comparisons as well). From trial and error 10 seems 
     'to be a good modifier.
-    Dim timeMultiplier As Integer = 10
+    Dim timeMultiplier As Integer = 1
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -36,7 +47,7 @@ Public Class Form1
 
     'MAIN FUNCTION
     Private Sub BeginSorting_Click(sender As System.Object, e As System.EventArgs) Handles BeginSorting.Click
-        Dim numberOfSorts As Integer = SortList.SelectedItems.Count()
+        Dim numberOfSorts As Integer = SortList.CheckedIndices.Count()
         Dim totalSorts As Integer = SortList.Items.Count()
 
         If numberOfSorts = 0 Then
@@ -44,19 +55,7 @@ Public Class Form1
             Return
         End If
 
-        Dim sortDict As New Dictionary(Of String, mySort) From
-            {{"Selection Sort", AddressOf SSComparisons},
-             {"Quick Sort", AddressOf QuickSortWrapper},
-             {"Median Of 3", AddressOf MedianOfThreeWrapper},
-             {"Insertion Sort", AddressOf InsertionComparisons},
-             {"Bubble Sort", AddressOf BubbleComparisons},
-             {"Merge Sort", AddressOf MergeSortWrapper},
-             {"Bucket Sort", AddressOf BucketSortComp},
-             {"VisualBasic Sort", AddressOf VBSortComps}
-            }
-
         TextBox1.Clear()
-        SortProgress.Value = 2
         Dim time As Integer = 0,
             comps As Integer = 1
         'tempArray is used to store the "unsorted" array that is used by all the sort functions selected
@@ -75,14 +74,15 @@ Public Class Form1
         getArrayType(arrayType, arrayTypeName)
 
         SortProgress.Maximum = InputSize.Value
+        SortProgress.Value = 2
 
-        For arraySize = 2 To InputSize.Value
+        For arraySize = 1 To InputSize.Value
             results.Initialize()
             For run = 0 To NumOfRuns.Value * timeMultiplier
                 'Generate the array to be used by all of the selected sorts
                 tempArray = arrayType(arraySize)
                 'Run the "unsorted" array through all of the selected sorts
-                For Each sortIndex As Integer In SortList.SelectedIndices
+                For Each sortIndex In SortList.CheckedIndices
                     comparisons = 0
                     results(sortIndex, time, run) = sortDict.ElementAt(sortIndex).Value(tempArray, comparisons)
                     results(sortIndex, comps, run) = comparisons
@@ -90,7 +90,7 @@ Public Class Form1
             Next
             'Now that all of the runs for an arraysize are done
             'calculate the averages and store them in the averages array
-            For Each index As Integer In SortList.SelectedIndices
+            For Each index In SortList.CheckedIndices
                 averages(index, time, arraySize) = calcAverage(results, index, time)
                 averages(index, comps, arraySize) = calcAverage(results, index, comps)
             Next
@@ -98,6 +98,29 @@ Public Class Form1
         Next
 
         'Make sure the file I'm trying to write to doesn't already exist.
+        'Delete file if it already exists.
+        Dim fileName As String
+        fileName = TryToCreateFile(arrayTypeName)
+
+        'Now that all sorting is done store the averages in a file
+        WriteResultsToFile(averages, fileName)
+
+
+        'Remove any previous series that may have been added in a previous run
+        Clear_Btn.PerformClick()
+
+        'Now convert averages to series to display in the chart
+        For Each index In SortList.CheckedIndices
+            addResultSeries(index, averages, sortDict.ElementAt(index).Key, time, "time")
+            addResultSeries(index, averages, sortDict.ElementAt(index).Key, comps, "comps")
+        Next
+        For Each line In Chart1.Series
+            TextBox1.AppendText(vbNewLine & line.Name)
+        Next
+    End Sub
+    'END MAIN FUNCTION
+
+    Private Function TryToCreateFile(ByVal arrayTypeName As String) As String
         Dim currentDir As String = My.Computer.FileSystem.CurrentDirectory
         TextBox1.AppendText("Writing file to directory: " & currentDir)
         Dim fileName As String = currentDir & "\Sorting_Results(" & arrayTypeName & ").csv"
@@ -105,25 +128,26 @@ Public Class Form1
             MsgBox(fileName & " already exists. Sending it to the recycle bin.")
             My.Computer.FileSystem.DeleteFile(fileName, FileIO.UIOption.AllDialogs, FileIO.RecycleOption.SendToRecycleBin)
         End If
+        Return fileName
+    End Function
 
-        'Now that all sorting is done store the averages in a file
-        For index = 0 To totalSorts
-            If SortList.CheckedIndices.Contains(index) Then
-                My.Computer.FileSystem.WriteAllText(fileName, sortDict.ElementAt(index).Key & "(Time),", True)
-                For arraySize = 0 To InputSize.Value
-                    My.Computer.FileSystem.WriteAllText(fileName, averages(index, time, arraySize).ToString & ",", True)
-                Next
-                My.Computer.FileSystem.WriteAllText(fileName, vbNewLine, True)
-                My.Computer.FileSystem.WriteAllText(fileName, sortDict.ElementAt(index).Key & "(Comps),", True)
-                For arraySize = 0 To InputSize.Value
-                    My.Computer.FileSystem.WriteAllText(fileName, averages(index, comps, arraySize).ToString & ",", True)
-                Next
-                My.Computer.FileSystem.WriteAllText(fileName, vbNewLine, True)
-            End If
+    Private Sub WriteResultsToFile(ByRef averages(,,) As Double, ByVal fileName As String)
+        Dim time = 0,
+            comps = 1
+        For Each index In SortList.CheckedIndices
+            My.Computer.FileSystem.WriteAllText(fileName, sortDict.ElementAt(index).Key & "(Time),", True)
+            For arraySize = 0 To InputSize.Value
+                My.Computer.FileSystem.WriteAllText(fileName, averages(index, time, arraySize).ToString & ",", True)
+            Next
+            My.Computer.FileSystem.WriteAllText(fileName, vbNewLine, True)
+            My.Computer.FileSystem.WriteAllText(fileName, sortDict.ElementAt(index).Key & "(Comps),", True)
+            For arraySize = 0 To InputSize.Value
+                My.Computer.FileSystem.WriteAllText(fileName, averages(index, comps, arraySize).ToString & ",", True)
+            Next
+            My.Computer.FileSystem.WriteAllText(fileName, vbNewLine, True)
         Next
-        TextBox1.AppendText(vbNewLine & "Done writing to results to file.")
+        TextBox1.AppendText(vbNewLine & "Done writing the results to file.")
     End Sub
-    'END MAIN FUNCTION
 
     Private Sub getArrayType(ByRef arrayType As Func(Of Integer, Array), ByRef arrayTypeName As String)
         If IncArrayRadio.Checked = True Then
@@ -141,6 +165,18 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub addResultSeries(ByVal index As Integer, ByRef averages(,,) As Double, ByVal sortName As String, ByVal resultType As Integer, ByVal resTypeString As String)
+        Dim tempSeries As Series
+        tempSeries = New Series
+        tempSeries.ChartType = SeriesChartType.Spline
+        tempSeries.Name = sortName & "(" & resTypeString & ")"
+        For arraySize = 0 To InputSize.Value
+            tempSeries.Points.AddXY(arraySize, averages(index, resultType, arraySize))
+        Next
+        Chart1.Series.Add(tempSeries)
+        numberOfSeries = numberOfSeries + 1
+        Chart1.Series(tempSeries.Name).Enabled = False
+    End Sub
 
     'CHANGE IF A SERIES IS ENABLED OR NOT
     Private Sub nVisBtn_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nVisBtn.CheckedChanged
@@ -226,19 +262,6 @@ Public Class Form1
         Next
     End Sub
 
-    Private Sub Rand_Series_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RandSerBtn.Click
-        Dim newSeries As New Series
-        Dim rand As New Random
-
-        Chart1.Series.Add(newSeries)
-        newSeries.Name = "NewSeries" & numberOfSeries
-        For i = 0 To InputSize.Value
-            newSeries.Points.AddXY(i, rand.Next(100) * 1.375234)
-        Next
-        newSeries.ChartType = SeriesChartType.Spline
-        numberOfSeries = numberOfSeries + 1
-    End Sub
-
     Private Sub InputSize_ValueChanged(sender As System.Object, e As System.EventArgs) Handles InputSize.ValueChanged
         UpdateLines()
     End Sub
@@ -266,4 +289,35 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub DisplayResultsFor(ByVal resTypeName As String)
+        For Each line As Series In Chart1.Series
+            If line.Name.Contains(resTypeName) Then
+                line.Enabled = True
+            Else
+                line.Enabled = False
+            End If
+        Next
+    End Sub
+
+    Private Sub DispResBox_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles DispResBox.CheckedChanged
+        If DispResBox.Checked = True Then
+            CompsRadio.Enabled = True
+            ClockRadio.Enabled = True
+        Else
+            CompsRadio.Enabled = False
+            ClockRadio.Enabled = False
+        End If
+    End Sub
+
+    Private Sub CompsRadio_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CompsRadio.CheckedChanged
+        If CompsRadio.Checked = True Then
+            DisplayResultsFor("comps")
+        End If
+    End Sub
+
+    Private Sub ClockRadio_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles ClockRadio.CheckedChanged
+        If ClockRadio.Checked = True Then
+            DisplayResultsFor("time")
+        End If
+    End Sub
 End Class
