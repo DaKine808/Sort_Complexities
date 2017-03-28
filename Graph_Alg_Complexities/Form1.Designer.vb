@@ -244,7 +244,6 @@ Partial Class Form1
         Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both
         Me.TextBox1.Size = New System.Drawing.Size(298, 182)
         Me.TextBox1.TabIndex = 107
-        Me.TextBox1.WordWrap = False
         '
         'NsqrVisBtn
         '

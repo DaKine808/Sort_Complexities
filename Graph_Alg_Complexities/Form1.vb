@@ -114,15 +114,12 @@ Public Class Form1
             addResultSeries(index, averages, sortDict.ElementAt(index).Key, time, "time")
             addResultSeries(index, averages, sortDict.ElementAt(index).Key, comps, "comps")
         Next
-        For Each line In Chart1.Series
-            TextBox1.AppendText(vbNewLine & line.Name)
-        Next
     End Sub
     'END MAIN FUNCTION
 
     Private Function TryToCreateFile(ByVal arrayTypeName As String) As String
         Dim currentDir As String = My.Computer.FileSystem.CurrentDirectory
-        TextBox1.AppendText("Writing file to directory: " & currentDir)
+        TextBox1.AppendText("Writing file to directory: " & vbNewLine & currentDir & vbNewLine & vbNewLine)
         Dim fileName As String = currentDir & "\Sorting_Results(" & arrayTypeName & ").csv"
         If My.Computer.FileSystem.FileExists(fileName) Then
             MsgBox(fileName & " already exists. Sending it to the recycle bin.")
@@ -134,16 +131,19 @@ Public Class Form1
     Private Sub WriteResultsToFile(ByRef averages(,,) As Double, ByVal fileName As String)
         Dim time = 0,
             comps = 1
+        TextBox1.AppendText("Results written to file: " & vbNewLine)
         For Each index In SortList.CheckedIndices
             My.Computer.FileSystem.WriteAllText(fileName, sortDict.ElementAt(index).Key & "(Time),", True)
             For arraySize = 0 To InputSize.Value
                 My.Computer.FileSystem.WriteAllText(fileName, averages(index, time, arraySize).ToString & ",", True)
             Next
+            TextBox1.AppendText(sortDict.ElementAt(index).Key & "(Time)" & vbNewLine)
             My.Computer.FileSystem.WriteAllText(fileName, vbNewLine, True)
             My.Computer.FileSystem.WriteAllText(fileName, sortDict.ElementAt(index).Key & "(Comps),", True)
             For arraySize = 0 To InputSize.Value
                 My.Computer.FileSystem.WriteAllText(fileName, averages(index, comps, arraySize).ToString & ",", True)
             Next
+            TextBox1.AppendText(sortDict.ElementAt(index).Key & "(Comps)" & vbNewLine)
             My.Computer.FileSystem.WriteAllText(fileName, vbNewLine, True)
         Next
         TextBox1.AppendText(vbNewLine & "Done writing the results to file.")
