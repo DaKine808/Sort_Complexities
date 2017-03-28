@@ -15,6 +15,7 @@
         passedArray.CopyTo(arrayCopy, 0)
 
         'Sort ArrayToSort()
+        'startTicks = DateTime.UtcNow.Ticks
         startTicks = Environment.TickCount
         For i = 0 To lastIndex - 1
             min = i
@@ -31,6 +32,7 @@
                 arrayCopy(min) = tempInt
             End If
         Next
+        'endTicks = DateTime.UtcNow.Ticks
         endTicks = Environment.TickCount
         totalTime = endTicks - startTicks
 
