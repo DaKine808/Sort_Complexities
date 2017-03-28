@@ -297,6 +297,10 @@ Public Class Form1
                 line.Enabled = False
             End If
         Next
+        'Currently used to get the chart area to correctly change scale when switching between 
+        '   viewing the graphs of comparison and time
+        nVisBtn.Checked = True
+        nVisBtn.Checked = False
     End Sub
 
     Private Sub DispResBox_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles DispResBox.CheckedChanged
