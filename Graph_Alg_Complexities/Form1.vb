@@ -118,6 +118,15 @@ Public Class Form1
             addResultSeries(index, averages, sortDict.ElementAt(index).Key, time, "time")
             addResultSeries(index, averages, sortDict.ElementAt(index).Key, comps, "comps")
         Next
+
+        If DispResBox.Checked = True Then
+            If CompsRadio.Checked = True Then
+                DisplayResultsFor("comps")
+            ElseIf ClockRadio.Checked = True Then
+                DisplayResultsFor("time")
+            End If
+        End If
+
     End Sub
     'END MAIN FUNCTION
 
@@ -311,6 +320,11 @@ Public Class Form1
         If DispResBox.Checked = True Then
             CompsRadio.Enabled = True
             ClockRadio.Enabled = True
+            If CompsRadio.Checked = True Then
+                DisplayResultsFor("comps")
+            ElseIf ClockRadio.Checked = True Then
+                DisplayResultsFor("time")
+            End If
         Else
             CompsRadio.Enabled = False
             ClockRadio.Enabled = False
