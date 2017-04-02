@@ -24,6 +24,8 @@ Public Class Form1
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
+        ClearDataTip.SetToolTip(Clear_Btn, "This deletes the data from the last Run. If results were written to a file then they must be deleted manually.")
+
         Chart1.Series(0).Name = "n"
         Chart1.Series(0).Color = Color.Black
         Chart1.Series(0).ChartType = SeriesChartType.Spline
@@ -97,13 +99,15 @@ Public Class Form1
             SortProgress.PerformStep()
         Next
 
-        'Make sure the file I'm trying to write to doesn't already exist.
-        'Delete file if it already exists.
-        Dim fileName As String
-        fileName = TryToCreateFile(arrayTypeName)
+        If WriteToFile.Checked Then
+            'Make sure the file I'm trying to write to doesn't already exist.
+            'Delete file if it already exists.
+            Dim fileName As String
+            fileName = TryToCreateFile(arrayTypeName)
 
-        'Now that all sorting is done store the averages in a file
-        WriteResultsToFile(averages, fileName)
+            'Now that all sorting is done store the averages in a file
+            WriteResultsToFile(averages, fileName)
+        End If
 
 
         'Remove any previous series that may have been added in a previous run

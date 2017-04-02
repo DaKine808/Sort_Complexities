@@ -22,12 +22,13 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Me.components = New System.ComponentModel.Container()
+        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series5 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series6 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series7 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series8 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.Chart1 = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.NumOfRuns = New System.Windows.Forms.NumericUpDown()
@@ -56,6 +57,8 @@ Partial Class Form1
         Me.BeginSorting = New System.Windows.Forms.Button()
         Me.SortList = New System.Windows.Forms.CheckedListBox()
         Me.DisplayBox = New System.Windows.Forms.CheckBox()
+        Me.WriteToFile = New System.Windows.Forms.CheckBox()
+        Me.ClearDataTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumOfRuns, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ArrayPanel.SuspendLayout()
@@ -66,34 +69,34 @@ Partial Class Form1
         '
         'Chart1
         '
-        ChartArea1.AxisX.MajorGrid.IntervalOffset = 0.0R
-        ChartArea1.AxisX.Minimum = 0.0R
-        ChartArea1.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea1)
-        Legend1.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend1)
+        ChartArea2.AxisX.MajorGrid.IntervalOffset = 0.0R
+        ChartArea2.AxisX.Minimum = 0.0R
+        ChartArea2.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea2)
+        Legend2.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend2)
         Me.Chart1.Location = New System.Drawing.Point(12, 12)
         Me.Chart1.Name = "Chart1"
-        Series1.ChartArea = "ChartArea1"
-        Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Series2.ChartArea = "ChartArea1"
-        Series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series2"
-        Series3.ChartArea = "ChartArea1"
-        Series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series3.Legend = "Legend1"
-        Series3.Name = "Series3"
-        Series4.ChartArea = "ChartArea1"
-        Series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series4.Legend = "Legend1"
-        Series4.Name = "Series4"
-        Me.Chart1.Series.Add(Series1)
-        Me.Chart1.Series.Add(Series2)
-        Me.Chart1.Series.Add(Series3)
-        Me.Chart1.Series.Add(Series4)
+        Series5.ChartArea = "ChartArea1"
+        Series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series5.Legend = "Legend1"
+        Series5.Name = "Series1"
+        Series6.ChartArea = "ChartArea1"
+        Series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series6.Legend = "Legend1"
+        Series6.Name = "Series2"
+        Series7.ChartArea = "ChartArea1"
+        Series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series7.Legend = "Legend1"
+        Series7.Name = "Series3"
+        Series8.ChartArea = "ChartArea1"
+        Series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series8.Legend = "Legend1"
+        Series8.Name = "Series4"
+        Me.Chart1.Series.Add(Series5)
+        Me.Chart1.Series.Add(Series6)
+        Me.Chart1.Series.Add(Series7)
+        Me.Chart1.Series.Add(Series8)
         Me.Chart1.Size = New System.Drawing.Size(783, 557)
         Me.Chart1.TabIndex = 0
         Me.Chart1.Text = "Chart1"
@@ -305,11 +308,11 @@ Partial Class Form1
         '
         'Clear_Btn
         '
-        Me.Clear_Btn.Location = New System.Drawing.Point(983, 362)
+        Me.Clear_Btn.Location = New System.Drawing.Point(983, 319)
         Me.Clear_Btn.Name = "Clear_Btn"
         Me.Clear_Btn.Size = New System.Drawing.Size(75, 23)
         Me.Clear_Btn.TabIndex = 24
-        Me.Clear_Btn.Text = "Clear Chart"
+        Me.Clear_Btn.Text = "Clear Data"
         Me.Clear_Btn.UseVisualStyleBackColor = True
         '
         'LineMultiplier
@@ -335,7 +338,7 @@ Partial Class Form1
         '
         'SortProgress
         '
-        Me.SortProgress.Location = New System.Drawing.Point(983, 285)
+        Me.SortProgress.Location = New System.Drawing.Point(1058, 428)
         Me.SortProgress.Name = "SortProgress"
         Me.SortProgress.Size = New System.Drawing.Size(100, 23)
         Me.SortProgress.Step = 1
@@ -344,7 +347,7 @@ Partial Class Form1
         '
         'BeginSorting
         '
-        Me.BeginSorting.Location = New System.Drawing.Point(983, 333)
+        Me.BeginSorting.Location = New System.Drawing.Point(983, 290)
         Me.BeginSorting.Name = "BeginSorting"
         Me.BeginSorting.Size = New System.Drawing.Size(75, 23)
         Me.BeginSorting.TabIndex = 109
@@ -364,18 +367,36 @@ Partial Class Form1
         'DisplayBox
         '
         Me.DisplayBox.AutoSize = True
-        Me.DisplayBox.Location = New System.Drawing.Point(1106, 291)
+        Me.DisplayBox.Location = New System.Drawing.Point(1085, 294)
         Me.DisplayBox.Name = "DisplayBox"
         Me.DisplayBox.Size = New System.Drawing.Size(145, 17)
         Me.DisplayBox.TabIndex = 22
         Me.DisplayBox.Text = "Display Un/Sorted Arrays"
         Me.DisplayBox.UseVisualStyleBackColor = True
         '
+        'WriteToFile
+        '
+        Me.WriteToFile.AutoSize = True
+        Me.WriteToFile.Location = New System.Drawing.Point(1085, 323)
+        Me.WriteToFile.Name = "WriteToFile"
+        Me.WriteToFile.Size = New System.Drawing.Size(112, 17)
+        Me.WriteToFile.TabIndex = 110
+        Me.WriteToFile.Text = "Write results to file"
+        Me.WriteToFile.UseVisualStyleBackColor = True
+        '
+        'ClearDataTip
+        '
+        Me.ClearDataTip.AutoPopDelay = 50000
+        Me.ClearDataTip.InitialDelay = 500
+        Me.ClearDataTip.ReshowDelay = 100
+        Me.ClearDataTip.ToolTipTitle = "Clear Data"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1293, 581)
+        Me.Controls.Add(Me.WriteToFile)
         Me.Controls.Add(Me.SortList)
         Me.Controls.Add(Me.BeginSorting)
         Me.Controls.Add(Me.SortProgress)
@@ -439,5 +460,7 @@ Partial Class Form1
     Friend WithEvents ClockRadio As System.Windows.Forms.RadioButton
     Friend WithEvents CompsRadio As System.Windows.Forms.RadioButton
     Friend WithEvents DispResBox As System.Windows.Forms.CheckBox
+    Friend WithEvents WriteToFile As System.Windows.Forms.CheckBox
+    Friend WithEvents ClearDataTip As System.Windows.Forms.ToolTip
 
 End Class
