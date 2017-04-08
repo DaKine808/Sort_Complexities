@@ -14,8 +14,6 @@ Public Class Form1
              {"VisualBasic Sort", AddressOf VBSortComps}
             }
 
-    Dim numberOfSeries As Integer = 10
-
     'Because counting clock cycles causes weird results below a certain threshold,
     'when counting them I adjust how many runs of each array size there will be 
     '(Currently affects counting comparisons as well). From trial and error 10 seems 
@@ -187,7 +185,6 @@ Public Class Form1
             tempSeries.Points.AddXY(arraySize, averages(index, resultType, arraySize))
         Next
         Chart1.Series.Add(tempSeries)
-        numberOfSeries = numberOfSeries + 1
         Chart1.Series(tempSeries.Name).Enabled = False
     End Sub
 
@@ -271,7 +268,6 @@ Public Class Form1
         'TextBox1.AppendText(vbNewLine)
         For i = 5 To Chart1.Series.Count
             Chart1.Series.RemoveAt(Chart1.Series.Count - 1)
-            numberOfSeries = numberOfSeries - 1
         Next
     End Sub
 
